@@ -1,0 +1,736 @@
+.page {
+  background-color: #091141;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.mainContent {
+  flex: 1;
+  padding-top: 7rem;
+  padding-bottom: 3rem;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 7rem);
+}
+
+.loginCard {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.loginCard h1 {
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.loginCard p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.loginCard form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loginCard input {
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.loginCard input:focus {
+  outline: none;
+  border-color: #1a6b7e;
+  box-shadow: 0 0 0 3px rgba(26, 107, 126, 0.1);
+}
+
+.loginCard button {
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #1a6b7e 0%, #2a8fa3 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginCard button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(26, 107, 126, 0.3);
+}
+
+.loginCard button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboardHeader h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.logoutBtn {
+  padding: 0.6rem 1.2rem;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background: #ff3838;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  background: none;
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: white;
+}
+
+.activeTab {
+  color: rgb(224, 199, 58);
+  border-bottom-color: rgb(224, 199, 58);
+}
+
+.tabContent {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #1a6b7e 0%, #2a8fa3 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.statCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.statValue {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.purchaseBreakdown {
+  margin-top: 2rem;
+}
+
+.purchaseBreakdown h2 {
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.planStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.planStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-left: 4px solid rgb(224, 199, 58);
+  border-radius: 4px;
+}
+
+.planStat span:first-child {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.count {
+  background: rgb(224, 199, 58);
+  color: rgb(17, 42, 70);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table thead {
+  background: #f5f5f5;
+}
+
+.table th {
+  padding: 1rem;
+  text-align: left;
+  color: #1a1a1a;
+  font-weight: 700;
+  border-bottom: 2px solid #ddd;
+}
+
+.table td {
+  padding: 1rem;
+  color: #555;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.status {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.status.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* New styles for enhanced features */
+.tableControls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 250px;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #1a6b7e;
+  box-shadow: 0 0 0 3px rgba(26, 107, 126, 0.1);
+}
+
+.filterSelect {
+  padding: 0.8rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #1a6b7e;
+  box-shadow: 0 0 0 3px rgba(26, 107, 126, 0.1);
+}
+
+.exportBtn {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #1a6b7e 0%, #2a8fa3 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.exportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 107, 126, 0.3);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.noResults {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.recentActivity {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.recentActivity h2 {
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.activityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  border-left: 3px solid rgb(224, 199, 58);
+  transition: all 0.2s ease;
+}
+
+.activityItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(2px);
+}
+
+.activityItem strong {
+  color: #1a1a1a;
+}
+
+.activityItem small {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.activityRight {
+  text-align: right;
+}
+
+.statusSmall {
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.statusSmall.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.statusSmall.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusSmall.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+
+/* Large Desktop Optimization (1025px+) */
+@media (min-width: 1025px) {
+  .mainContent {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    overflow-y: auto;
+  }
+
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 3rem 4rem;
+  }
+
+  .dashboardHeader {
+    gap: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .dashboardHeader h1 {
+    font-size: 2.5rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .statCard {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .statCard:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .statLabel {
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+  }
+
+  .statValue {
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  .tabs {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .tab {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .tab.active {
+    border-bottom: 3px solid #1a6b7e;
+    color: #1a6b7e;
+  }
+
+  .tabContent {
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .table {
+    font-size: 1rem;
+  }
+
+  .table th {
+    padding: 1.5rem;
+    font-size: 1rem;
+    background: #f8f9fa;
+  }
+
+  .table td {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .table tbody tr:hover {
+    background: #f5f5f5;
+    cursor: pointer;
+  }
+
+  .loginCard {
+    max-width: 450px;
+    padding: 3.5rem;
+  }
+
+  .loginCard h1 {
+    font-size: 2rem;
+  }
+
+  .loginCard input {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .loginCard button {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+
+  .loginContainer {
+    height: calc(100vh - 6rem);
+  }
+
+  .loginCard {
+    margin: 1rem;
+    padding: 2rem;
+  }
+
+  .loginCard h1 {
+    font-size: 1.5rem;
+  }
+
+  .loginCard input {
+    font-size: 16px;
+    padding: 0.7rem;
+  }
+
+  .dashboardHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .tabContent {
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.5rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  .dashboardHeader h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    min-height: 100vh;
+  }
+
+  .mainContent {
+    padding-top: 5rem;
+    padding-bottom: 1rem;
+    overflow-y: auto;
+  }
+
+  .loginContainer {
+    height: calc(100vh - 5rem);
+    padding: 0;
+  }
+
+  .loginCard {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: 0;
+  }
+
+  .loginCard h1 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .loginCard p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .loginCard form {
+    gap: 0.8rem;
+  }
+
+  .loginCard input {
+    padding: 0.7rem;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+
+  .loginCard button {
+    padding: 0.8rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  .dashboardHeader {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: stretch;
+  }
+
+  .dashboardHeader h1 {
+    font-size: 1.2rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.8rem;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tab {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+  }
+
+  .tabContent {
+    padding: 1rem;
+  }
+
+  .tableContainer {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table {
+    font-size: 0.75rem;
+    width: 100%;
+  }
+
+  .table th {
+    padding: 0.5rem;
+    word-break: break-word;
+  }
+
+  .table td {
+    padding: 0.4rem;
+    word-break: break-word;
+  }
+}
