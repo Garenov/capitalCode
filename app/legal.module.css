@@ -1,0 +1,104 @@
+/* ═══════════════════════════
+   LEGAL PAGES (shared)
+   ═══════════════════════════ */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base, #07101f);
+}
+
+.mainContent {
+  flex: 1;
+  padding: 100px 1.5rem 3rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.backLink {
+  display: inline-block;
+  color: var(--gold, #e0c73a);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: opacity 0.2s;
+}
+
+.backLink:hover {
+  opacity: 0.8;
+}
+
+.title {
+  color: var(--gold, #e0c73a);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.updated {
+  color: var(--text-muted, #5a6a85);
+  font-size: 0.85rem;
+  margin: 0 0 2.5rem;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  color: var(--text-primary, #f0f4ff);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section p,
+.section li {
+  color: var(--text-secondary, #9baec8);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  margin: 0 0 0.75rem;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.section ul li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.section ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--gold, #e0c73a);
+  font-weight: 700;
+}
+
+.section a {
+  color: var(--gold, #e0c73a);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.section a:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .mainContent {
+    padding: 80px 1rem 2rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+}

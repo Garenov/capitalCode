@@ -1,6 +1,7 @@
 import { db, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
+import { PLANS } from "@/lib/plans";
 
 // Middleware to verify token
 function verifyToken(token) {
@@ -83,7 +84,7 @@ export async function GET(request) {
   }
 }
 
-// POST - Create a new purchase
+// POST - Create a new purchase (server-validated, defaults to "pending")
 export async function POST(request) {
   try {
     const authHeader = request.headers.get("authorization");
@@ -110,39 +111,39 @@ export async function POST(request) {
       );
     }
 
-    const { planName, price, devices, years, currency, transactionId } =
-      await request.json();
+    const { planName, transactionId } = await request.json();
 
-    // Validate input
-    if (!planName || !price) {
+    // Server-side plan validation — reject unknown plans
+    const plan = PLANS[planName];
+    if (!plan) {
       return new Response(
         JSON.stringify({
           success: false,
-          message: "Please provide planName and price",
+          message: "Invalid plan. Allowed: DIGITAL, PHYSICAL, BUNDLE",
         }),
         { status: 400 }
       );
     }
 
-    // Create purchase
+    // Use server-authoritative price — never trust client-supplied price
     const newPurchase = await db
       .insert(schema.purchases)
       .values({
         userId: decoded.userId,
-        planName,
-        price,
-        devices: devices || 1,
-        years: years || 1,
-        currency: currency || "Kč",
+        planName: plan.name,
+        price: plan.priceKc,
+        devices: 1,
+        years: 1,
+        currency: "Kč",
         transactionId: transactionId || null,
-        status: "completed",
+        status: "pending",  // Only webhook should set "completed"
       })
       .returning();
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Purchase created successfully",
+        message: "Purchase created (pending payment)",
         purchase: newPurchase[0],
       }),
       { status: 201 }

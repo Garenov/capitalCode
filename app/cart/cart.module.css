@@ -1,240 +1,275 @@
+/* ═══════════════════════════
+   CART PAGE
+   ═══════════════════════════ */
+
 .page {
-    background: linear-gradient(135deg, #0d1b35 0%, #273d69 55%, #0d1b35 100%);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #112244 0%, #07101f 60%);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    width: 100%;
 }
 
 .mainContent {
     flex: 1;
-    padding-top: 7rem;
-    padding-bottom: 3rem;
-    overflow-y: auto;
+    padding-top: 90px;
+    padding-bottom: 4rem;
     width: 100%;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
 }
 
+/* ── Page header ── */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
-    color: white;
+    gap: 1rem;
 }
 
 .header h1 {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #f0f4ff;
+    letter-spacing: -0.5px;
     margin: 0;
 }
 
 .clearButton {
-    padding: 0.6rem 1.2rem;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.83rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
 }
 
 .clearButton:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.35);
 }
 
+/* ── Empty state ── */
 .emptyCart {
-    background: white;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     padding: 4rem 2rem;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .emptyIcon {
-    font-size: 5rem;
+    font-size: 4rem;
     margin-bottom: 1rem;
-    opacity: 0.3;
+    opacity: 0.35;
 }
 
 .emptyCart h2 {
-    color: #1a1a1a;
+    color: #f0f4ff;
+    font-size: 1.3rem;
     margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
 .emptyCart p {
-    color: #666;
+    color: #9baec8;
     margin-bottom: 2rem;
+    font-size: 0.9rem;
+    max-width: 360px;
+    margin-inline: auto;
+    line-height: 1.6;
 }
 
 .shopButton {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #1a6b7e 0%, #2a8fa3 100%);
-    color: white;
+    padding: 0.85rem 2rem;
+    background: #e0c73a;
+    color: #07101f;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 
 .shopButton:hover {
+    background: #f0d84a;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(26, 107, 126, 0.3);
+    box-shadow: 0 6px 20px rgba(224, 199, 58, 0.3);
 }
 
+/* ── Cart items ── */
 .cartItems {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .cartItem {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    gap: 1.5rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .cartItem:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .itemInfo {
     flex: 1;
+    min-width: 0;
 }
 
 .itemInfo h3 {
-    color: #1a1a1a;
-    margin: 0 0 0.5rem 0;
-    font-size: 1.3rem;
+    color: #f0f4ff;
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
 }
 
 .itemDescription {
-    color: #666;
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    color: #9baec8;
+    margin: 0 0 0.5rem;
+    font-size: 0.83rem;
+    line-height: 1.5;
 }
 
 .digitalBadge {
-    display: inline-block;
-    padding: 0.3rem 0.8rem;
-    background: #e8f5e9;
-    color: #2e7d32;
-    border-radius: 4px;
-    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(34, 197, 94, 0.12);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 99px;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
 .itemControls {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    flex-shrink: 0;
 }
 
+/* ── Quantity control ── */
 .quantityControl {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    background: #f5f5f5;
-    padding: 0.5rem;
-    border-radius: 8px;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.35rem 0.5rem;
+    border-radius: 9px;
 }
 
 .quantityButton {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border: none;
-    background: white;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #666;
-    transition: all 0.2s ease;
+    color: #9baec8;
+    transition: background 0.2s, color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
 }
 
 .quantityButton:hover:not(:disabled) {
-    background: #1a6b7e;
-    color: white;
+    background: rgba(224, 199, 58, 0.15);
+    color: #e0c73a;
 }
 
 .quantityButton:disabled {
-    opacity: 0.3;
+    opacity: 0.25;
     cursor: not-allowed;
 }
 
 .quantity {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    min-width: 30px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f0f4ff;
+    min-width: 24px;
     text-align: center;
 }
 
+/* ── Price ── */
 .itemPrice {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    min-width: 120px;
+    min-width: 90px;
 }
 
 .price {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #f0f4ff;
 }
 
 .pricePerUnit {
-    font-size: 0.85rem;
-    color: #999;
+    font-size: 0.75rem;
+    color: #5a6a85;
+    margin-top: 2px;
 }
 
+/* ── Remove ── */
 .removeButton {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border: none;
-    background: #ffebee;
-    color: #c62828;
-    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .removeButton:hover {
-    background: #c62828;
-    color: white;
-    transform: scale(1.1);
+    background: rgba(239, 68, 68, 0.22);
+    color: #fee2e2;
+    transform: scale(1.08);
 }
 
+/* ── Order summary ── */
 .summary {
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    max-width: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 1.75rem;
+    max-width: 440px;
     margin-left: auto;
 }
 
@@ -242,82 +277,90 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e0e0e0;
-    color: #666;
-    font-size: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #9baec8;
+    font-size: 0.9rem;
 }
 
 .summaryRow.total {
     border-bottom: none;
-    border-top: 2px solid #1a6b7e;
-    margin-top: 0.5rem;
-    padding-top: 1.5rem;
-    font-size: 1.2rem;
+    padding-top: 1.25rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #f0f4ff;
+    margin-top: 0.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .free {
-    color: #2e7d32;
+    color: #86efac;
     font-weight: 600;
+    font-size: 0.85rem;
 }
 
 .totalPrice {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #1a6b7e;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #e0c73a;
+    letter-spacing: -0.5px;
 }
 
 .checkoutButton {
     width: 100%;
-    padding: 1.2rem;
-    background: linear-gradient(135deg, #1a6b7e 0%, #2a8fa3 100%);
-    color: white;
+    padding: 1rem;
+    background: #e0c73a;
+    color: #07101f;
     border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1.1rem;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1.5rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    margin-top: 1.25rem;
+    letter-spacing: 0.2px;
 }
 
 .checkoutButton:hover:not(:disabled) {
+    background: #f0d84a;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(26, 107, 126, 0.3);
+    box-shadow: 0 8px 24px rgba(224, 199, 58, 0.35);
 }
 
 .checkoutButton:disabled {
-    opacity: 0.6;
+    opacity: 0.45;
     cursor: not-allowed;
+    transform: none;
 }
 
 .continueButton {
     width: 100%;
-    padding: 1rem;
+    padding: 0.85rem;
     background: transparent;
-    color: #1a6b7e;
-    border: 2px solid #1a6b7e;
-    border-radius: 8px;
+    color: #9baec8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    margin-top: 0.75rem;
 }
 
 .continueButton:hover {
-    background: rgba(26, 107, 126, 0.1);
+    color: #f0f4ff;
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.05);
 }
 
-/* Responsive Design */
+/* ── Responsive ── */
 @media (max-width: 768px) {
     .mainContent {
-        padding-top: 6rem;
+        padding-top: 76px;
     }
 
     .header h1 {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 
     .cartItem {
@@ -344,32 +387,9 @@
     .header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
     }
 
     .header h1 {
-        font-size: 1.5rem;
-    }
-
-    .itemInfo h3 {
-        font-size: 1.1rem;
-    }
-
-    .itemControls {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .quantityControl {
-        order: 1;
-    }
-
-    .itemPrice {
-        order: 2;
-        flex: 1;
-    }
-
-    .removeButton {
-        order: 3;
+        font-size: 1.25rem;
     }
 }

@@ -1,9 +1,58 @@
 "use client";
 import React, { useState } from "react";
 import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import styles from "./qna.module.css";
+import { useLanguage } from "@/lib/i18n";
+import { useToast } from "@/app/components/Toast";
+
+const faqItems = [
+  {
+    id: 1,
+    question: "What is The Capital Code?",
+    answer: "The Capital Code is a comprehensive guide to financial strategies, investing, and building long-term wealth. It combines theory with practical advice for disciplined investors.",
+  },
+  {
+    id: 2,
+    question: "What's the difference between digital and physical editions?",
+    answer: "The digital edition is a downloadable PDF available immediately after payment. The physical edition is a printed book shipped to your address. The bundle includes both.",
+  },
+  {
+    id: 3,
+    question: "How does payment work?",
+    answer: "Payments are processed securely via Stripe. We accept most credit and debit cards. You'll receive a confirmation email after successful payment.",
+  },
+  {
+    id: 4,
+    question: "How do I download the digital edition?",
+    answer: "After payment, log in to your account and navigate to 'My Orders'. You'll find a download button for the PDF there.",
+  },
+  {
+    id: 5,
+    question: "Can I get a refund?",
+    answer: "Digital products cannot be refunded once downloaded. Physical books can be returned within 14 days of delivery in original condition.",
+  },
+  {
+    id: 6,
+    question: "Do I need an account to purchase?",
+    answer: "Yes, you need to create an account and verify your email to make a purchase. This gives you access to your orders and downloads.",
+  },
+  {
+    id: 7,
+    question: "How long does physical delivery take?",
+    answer: "Standard delivery takes 3–7 business days within Czech Republic. You'll receive an email with tracking information when your order ships.",
+  },
+  {
+    id: 8,
+    question: "How do I subscribe to updates?",
+    answer: "You can find the newsletter subscription form on the homepage. Enter your email and we'll keep you updated about new chapters and exclusive content.",
+  },
+];
 
 export default function QnA() {
+  const { t } = useLanguage();
+  const toast = useToast();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,6 +62,7 @@ export default function QnA() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +76,7 @@ export default function QnA() {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setSubmitted(true);
+    toast.success(t("qna.sent"));
     setTimeout(() => {
       setFormData({
         name: "",
@@ -38,10 +89,6 @@ export default function QnA() {
     }, 3000);
   };
 
-  const faqItems = [];
-
-  const [expandedFaq, setExpandedFaq] = useState(null);
-
   return (
     <div className={styles.page}>
       <Header />
@@ -49,22 +96,19 @@ export default function QnA() {
         <div className={styles.container}>
           <section className={styles.contactSection}>
             <div className={styles.formContainer}>
-              <h1 className={styles.title}>Get In Touch</h1>
-              <p className={styles.subtitle}>
-                Have questions? We're here to help. Send us a message and we'll
-                respond as soon as possible.
-              </p>
+              <h1 className={styles.title}>{t("qna.contactTitle")}</h1>
+              <p className={styles.subtitle}>{t("qna.contactSubtitle")}</p>
 
               {submitted && (
                 <div className={styles.successMessage}>
-                  ✓ Thank you! We'll get back to you soon.
+                  {t("qna.sent")}
                 </div>
               )}
 
               <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
                   <label htmlFor="name" className={styles.label}>
-                    Your Name
+                    {t("qna.nameLabel")}
                   </label>
                   <input
                     type="text"
@@ -80,7 +124,7 @@ export default function QnA() {
 
                 <div className={styles.formGroup}>
                   <label htmlFor="email" className={styles.label}>
-                    Email Address
+                    {t("qna.emailLabel")}
                   </label>
                   <input
                     type="email"
@@ -96,7 +140,7 @@ export default function QnA() {
 
                 <div className={styles.formGroup}>
                   <label htmlFor="subject" className={styles.label}>
-                    Subject
+                    {t("qna.subjectLabel")}
                   </label>
                   <input
                     type="text"
@@ -112,7 +156,7 @@ export default function QnA() {
 
                 <div className={styles.formGroup}>
                   <label htmlFor="category" className={styles.label}>
-                    Category
+                    {t("qna.categoryLabel")}
                   </label>
                   <select
                     id="category"
@@ -133,7 +177,7 @@ export default function QnA() {
 
                 <div className={styles.formGroup}>
                   <label htmlFor="message" className={styles.label}>
-                    Message
+                    {t("qna.messageLabel")}
                   </label>
                   <textarea
                     id="message"
@@ -148,16 +192,14 @@ export default function QnA() {
                 </div>
 
                 <button type="submit" className={styles.submitButton}>
-                  Send Message
+                  {t("qna.send")}
                 </button>
               </form>
             </div>
 
             <div className={styles.faqContainer}>
-              <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
-              <p className={styles.faqSubtitle}>
-                Find answers to common questions below.
-              </p>
+              <h2 className={styles.faqTitle}>{t("faq.title")}</h2>
+              <p className={styles.faqSubtitle}>{t("faq.subtitle")}</p>
 
               <div className={styles.faqList}>
                 {faqItems.map((item) => (
@@ -181,7 +223,6 @@ export default function QnA() {
                     {expandedFaq === item.id && (
                       <div className={styles.faqAnswer}>
                         <p>{item.answer}</p>
-                        <small className={styles.faqDate}>{item.date}</small>
                       </div>
                     )}
                   </div>
@@ -191,6 +232,7 @@ export default function QnA() {
           </section>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

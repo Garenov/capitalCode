@@ -3,9 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
 import styles from "./cart.module.css";
+import { useToast } from "@/app/components/Toast";
 
 export default function Cart() {
     const router = useRouter();
+    const toast = useToast();
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -57,54 +59,45 @@ export default function Cart() {
         const token = localStorage.getItem('authToken');
 
         if (!token) {
-            alert("Přihlaste se prosím pro dokončení nákupu");
+            toast.warning("Please log in to complete your purchase");
             return;
         }
 
         if (cartItems.length === 0) {
-            alert("Váš košík je prázdný");
+            toast.warning("Your cart is empty");
             return;
         }
 
         setLoading(true);
 
         try {
-            // Process each item in cart
-            for (const item of cartItems) {
-                const response = await fetch('/api/purchases', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        planName: item.name,
-                        price: item.price,
-                        devices: item.quantity,
-                        years: 1,
-                        currency: 'Kč',
-                    }),
-                });
+            // Use the first cart item — Stripe checkout handles one plan at a time
+            const item = cartItems[0];
 
-                const data = await response.json();
-                if (!data.success) {
-                    throw new Error(data.message || 'Purchase failed');
-                }
+            const response = await fetch('/api/stripe/checkout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ planName: item.name }),
+            });
 
-                // Auto-download for digital items
-                if (item.downloadable) {
-                    setTimeout(() => {
-                        window.open('/ccBook.pdf', '_blank');
-                    }, 500);
-                }
+            const data = await response.json();
+
+            if (!data.success) {
+                toast.error(data.message || 'Failed to start payment.');
+                return;
             }
 
-            alert(`Objednávka úspěšně dokončena! Celkem: ${getTotalPrice()} Kč`);
+            // Clear cart before redirecting to Stripe
             clearCart();
-            router.push('/');
+
+            // Redirect to Stripe Checkout
+            window.location.href = data.url;
         } catch (error) {
             console.error('Checkout error:', error);
-            alert('Chyba při zpracování objednávky: ' + error.message);
+            toast.error('Error processing order: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -116,10 +109,10 @@ export default function Cart() {
             <main className={styles.mainContent}>
                 <div className={styles.container}>
                     <div className={styles.header}>
-                        <h1>Nákupní košík</h1>
+                        <h1>Shopping Cart</h1>
                         {cartItems.length > 0 && (
                             <button onClick={clearCart} className={styles.clearButton}>
-                                Vyprázdnit košík
+                                Clear Cart
                             </button>
                         )}
                     </div>
@@ -127,13 +120,13 @@ export default function Cart() {
                     {cartItems.length === 0 ? (
                         <div className={styles.emptyCart}>
                             <div className={styles.emptyIcon}>🛒</div>
-                            <h2>Váš košík je prázdný</h2>
-                            <p>Přidejte knihy do košíku a vraťte se sem pro dokončení nákupu</p>
+                            <h2>Your cart is empty</h2>
+                            <p>Add books to your cart and come back here to complete your purchase</p>
                             <button
                                 onClick={() => router.push('/pricing')}
                                 className={styles.shopButton}
                             >
-                                Prohlédnout nabídku
+                                Browse Products
                             </button>
                         </div>
                     ) : (
@@ -142,10 +135,10 @@ export default function Cart() {
                                 {cartItems.map((item) => (
                                     <div key={item.id} className={styles.cartItem}>
                                         <div className={styles.itemInfo}>
-                                            <h3>{item.name} Edice</h3>
+                                            <h3>{item.name} Edition</h3>
                                             <p className={styles.itemDescription}>{item.description}</p>
                                             {item.downloadable && (
-                                                <span className={styles.digitalBadge}>📥 Digitální stažení</span>
+                                                <span className={styles.digitalBadge}>📥 Digital Download</span>
                                             )}
                                         </div>
 
@@ -170,14 +163,14 @@ export default function Cart() {
                                             <div className={styles.itemPrice}>
                                                 <span className={styles.price}>{item.price * item.quantity} Kč</span>
                                                 {item.quantity > 1 && (
-                                                    <span className={styles.pricePerUnit}>{item.price} Kč/ks</span>
+                                                    <span className={styles.pricePerUnit}>{item.price} Kč/ea</span>
                                                 )}
                                             </div>
 
                                             <button
                                                 onClick={() => removeItem(item.id)}
                                                 className={styles.removeButton}
-                                                title="Odebrat z košíku"
+                                                title="Remove from cart"
                                             >
                                                 ✕
                                             </button>
@@ -188,15 +181,15 @@ export default function Cart() {
 
                             <div className={styles.summary}>
                                 <div className={styles.summaryRow}>
-                                    <span>Mezisoučet:</span>
+                                    <span>Subtotal:</span>
                                     <span>{getTotalPrice()} Kč</span>
                                 </div>
                                 <div className={styles.summaryRow}>
-                                    <span>Doprava:</span>
-                                    <span className={styles.free}>Zdarma</span>
+                                    <span>Shipping:</span>
+                                    <span className={styles.free}>Free</span>
                                 </div>
                                 <div className={`${styles.summaryRow} ${styles.total}`}>
-                                    <span>Celkem:</span>
+                                    <span>Total:</span>
                                     <span className={styles.totalPrice}>{getTotalPrice()} Kč</span>
                                 </div>
 
@@ -205,14 +198,14 @@ export default function Cart() {
                                     className={styles.checkoutButton}
                                     disabled={loading}
                                 >
-                                    {loading ? "Zpracování..." : "Dokončit objednávku"}
+                                    {loading ? "Processing..." : "Complete Order"}
                                 </button>
 
                                 <button
                                     onClick={() => router.push('/pricing')}
                                     className={styles.continueButton}
                                 >
-                                    Pokračovat v nákupu
+                                    Continue Shopping
                                 </button>
                             </div>
                         </>

@@ -2,12 +2,8 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./header.module.css";
-
-const navigationLinks = [
-  { label: "Home", href: "/" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Q&A", href: "/qna" },
-];
+import { useToast } from "@/app/components/Toast";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,6 +11,13 @@ export default function Header() {
   const [opacity, setOpacity] = useState(1);
   const [user, setUser] = useState(null);
   const router = useRouter();
+  const { t } = useLanguage();
+
+  const navigationLinks = useMemo(() => [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.pricing"), href: "/pricing" },
+    { label: t("nav.qna"), href: "/qna" },
+  ], [t]);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -94,10 +97,10 @@ export default function Header() {
             aria-label="Go to Q&A page"
             title="Questions & Answers"
           >
-            <img src="/images/message.png" width={50} height={50} alt="Q&A" />
+            <img src="/images/QnA.png" width={27} height={27} alt="Q&A" />
           </button>
 
-          <h1 className={styles.titleHeader} onClick={() => router.push("/")} style={{ cursor: "pointer" }} role="button" tabIndex={0}>Capital Core</h1>
+          <h1 className={styles.titleHeader} onClick={() => router.push("/")} style={{ cursor: "pointer" }} role="button" tabIndex={0}>The Capital Code</h1>
 
           <button
             className={styles.headerRightButton}
@@ -110,10 +113,10 @@ export default function Header() {
           <button
             className={styles.headerRightButton}
             aria-label="View cart"
-            title="Nákupní košík"
+            title="Shopping Cart"
             onClick={() => router.push("/cart")}
           >
-            <img src="/images/buymenu.png" width={27} height={27} alt="Cart" />
+            <img src="/images/pricing.png" width={27} height={27} alt="Cart" />
           </button>
 
           {user ? (
@@ -131,7 +134,7 @@ export default function Header() {
               onClick={handleLoginClick}
               aria-label="Open login form"
             >
-              Log In
+              {t("nav.login")}
             </button>
           )}
         </div>
@@ -193,6 +196,8 @@ function LoginForm({ onSuccess }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
+  const toast = useToast();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -212,22 +217,24 @@ function LoginForm({ onSuccess }) {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        alert(isSignUp ? "Registration successful!" : "Login successful!");
-        setEmail("");
-        setPassword("");
-        setName("");
-        setPhone("");
-        onSuccess();
-        // Reload page to update header state
-        window.location.reload();
+        if (isSignUp) {
+          toast.success("Registration successful! Please check your email to verify your account.", { duration: 6000 });
+          setEmail(""); setPassword(""); setName(""); setPhone("");
+          onSuccess();
+        } else {
+          localStorage.setItem("authToken", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          toast.success("Login successful!");
+          setEmail(""); setPassword(""); setName(""); setPhone("");
+          onSuccess();
+          window.location.reload();
+        }
       } else {
-        alert(data.message || "Authentication failed");
+        toast.error(data.message || "Authentication failed");
       }
     } catch (error) {
       console.error("Auth error:", error);
-      alert("Authentication failed");
+      toast.error("Authentication failed");
     } finally {
       setLoading(false);
     }

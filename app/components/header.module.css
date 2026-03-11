@@ -1,92 +1,129 @@
+/* ═══════════════════════════
+   HEADER
+   ═══════════════════════════ */
+
 .header {
-  text-align: center;
-  padding: 0.75rem 0;
-  width: 100%;
-  height: 4.5em;
-  margin-top: 0;
-  background: linear-gradient(135deg, #0d1b35 0%, #273d69 90%, #0d1b35 100%);
-  z-index: 1000;
-  backdrop-filter: blur(0.1rem);
   position: fixed;
   top: 0;
-  transition: background-color 0.3s ease;
+  width: 100%;
+  height: 60px;
+  z-index: 1000;
+  background: rgba(7, 16, 31, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background var(--transition, 0.25s ease);
 }
 
 .headerBox {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding-top: 0.25rem;
+  gap: 1rem;
+  height: 100%;
+  padding: 0 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
-.headerLeftButtons {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.headerLeftButtons:hover {
-  opacity: 0.7;
-  transform: scale(1.1);
-}
-
+/* ── Logo / title ── */
 .titleHeader {
   margin: 0;
-  color: rgb(234, 231, 255);
-  font-size: 1.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
   flex-grow: 1;
   text-align: center;
+  white-space: nowrap;
+
+  /* Gold shimmer effect */
+  background: linear-gradient(
+    90deg,
+    #c8b033 0%,
+    #f5e878 25%,
+    #e0c73a 50%,
+    #f5e878 75%,
+    #c8b033 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: _hdr_shimmer 3s ease-in-out infinite;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(224, 199, 58, 0.25));
 }
 
+@keyframes _hdr_shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+
+
+/* ── Icon buttons ── */
+.headerLeftButtons,
 .headerRightButton {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  color: #9baec8;
+  transition: color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
 }
 
+.headerLeftButtons:hover,
 .headerRightButton:hover {
-  opacity: 0.7;
-  transform: scale(1.1);
+  color: #f0f4ff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
+/* ── CTA button ── */
 .logInButton {
-  padding: 0.5rem 1.2rem;
-  background-color: rgb(224, 199, 58);
+  padding: 0.45rem 1.1rem;
+  background: #e0c73a;
   border: none;
-  border-radius: 0.4rem;
-  color: rgb(17, 42, 70);
-  font-weight: 600;
+  border-radius: 8px;
+  color: #07101f;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.2px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .logInButton:hover {
-  background-color: rgb(200, 175, 40);
-  transform: scale(1.05);
+  background: #f0d84a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(224, 199, 58, 0.35);
 }
 
-/* Burger Menu Styles */
+.logInButton:active {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════
+   BURGER MENU (slide drawer)
+   ═══════════════════════════ */
+
 .burgerMenu {
   position: fixed;
   left: -300px;
-  top: 4.5em;
-  width: 280px;
-  height: calc(100vh - 4.5em);
-  background: linear-gradient(135deg, #1a3a52 0%, #0f2540 100%);
+  top: 60px;
+  width: 272px;
+  height: calc(100vh - 60px);
+  background: rgba(10, 20, 40, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
   z-index: 999;
-  transition: left 0.3s ease;
-  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
 }
@@ -99,88 +136,92 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid rgba(234, 231, 255, 0.2);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .menuHeader h2 {
   margin: 0;
-  color: rgb(234, 231, 255);
-  font-size: 1.2rem;
+  color: #f0f4ff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.2px;
 }
 
 .closeButton {
   background: none;
   border: none;
-  color: rgb(234, 231, 255);
-  font-size: 1.5rem;
+  color: #9baec8;
+  font-size: 1.25rem;
   cursor: pointer;
-  padding: 0;
   width: 32px;
   height: 32px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
 .closeButton:hover {
-  color: rgb(224, 199, 58);
+  color: #f0f4ff;
+  background: rgba(255, 255, 255, 0.08);
   transform: rotate(90deg);
 }
 
 .menuNav {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin: 0;
+  padding: 0.75rem 0;
 }
 
 .menuLink {
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1.5rem;
   background: none;
   border: none;
-  color: rgb(234, 231, 255);
-  font-size: 1rem;
+  border-left: 2px solid transparent;
+  color: #9baec8;
+  font-size: 0.95rem;
+  font-weight: 500;
   text-align: left;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-left: 4px solid transparent;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, padding-left 0.2s ease;
 }
 
 .menuLink:hover {
-  background-color: rgba(224, 199, 58, 0.1);
-  border-left-color: rgb(224, 199, 58);
+  background: rgba(224, 199, 58, 0.07);
+  border-left-color: #e0c73a;
   padding-left: 2rem;
-  color: rgb(224, 199, 58);
+  color: #e0c73a;
 }
 
 .backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
   z-index: 998;
 }
 
-/* Login Modal Styles */
+/* ═══════════════════════════
+   LOGIN MODAL
+   ═══════════════════════════ */
+
 .loginOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  animation: fadeIn 0.3s ease;
+  padding: 1rem;
+  animation: _hdr_fadeIn 0.2s ease;
 }
 
-@keyframes fadeIn {
+@keyframes _hdr_fadeIn {
   from {
     opacity: 0;
   }
@@ -191,18 +232,21 @@
 }
 
 .loginModal {
-  background: white;
-  border-radius: 12px;
-  padding: 2.5rem;
-  width: 90%;
+  background: rgba(13, 24, 45, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
   max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.6);
+  animation: _hdr_slideUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes slideUp {
+@keyframes _hdr_slideUp {
   from {
-    transform: translateY(30px);
+    transform: translateY(24px);
     opacity: 0;
   }
 
@@ -216,159 +260,187 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 1.75rem;
   padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .loginHeader h2 {
   margin: 0;
-  color: #1a1a1a;
-  font-size: 1.6rem;
+  color: #f0f4ff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.loginHeader button {
+  /* close X inside header */
+  background: none;
+  border: none;
+  color: #9baec8;
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.loginHeader button:hover {
+  color: #f0f4ff;
+  background: rgba(255, 255, 255, 0.08);
+  transform: rotate(90deg);
 }
 
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.1rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .formGroup label {
-  color: #333;
+  color: #9baec8;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .formGroup input {
-  padding: 0.75rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #f0f4ff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.formGroup input::placeholder {
+  color: #5a6a85;
 }
 
 .formGroup input:focus {
   outline: none;
-  border-color: rgb(224, 199, 58);
-  box-shadow: 0 0 0 3px rgba(224, 199, 58, 0.1);
+  border-color: rgba(224, 199, 58, 0.5);
+  box-shadow: 0 0 0 3px rgba(224, 199, 58, 0.10);
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .loginSubmit {
-  padding: 0.9rem;
-  background-color: rgb(224, 199, 58);
+  padding: 0.85rem;
+  background: #e0c73a;
   border: none;
-  border-radius: 6px;
-  color: rgb(17, 42, 70);
+  border-radius: 10px;
+  color: #07101f;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  margin-top: 0.35rem;
+  letter-spacing: 0.2px;
 }
 
 .loginSubmit:hover {
-  background-color: rgb(200, 175, 40);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(224, 199, 58, 0.3);
+  background: #f0d84a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(224, 199, 58, 0.3);
+}
+
+.loginSubmit:active {
+  transform: translateY(0);
+}
+
+.loginSubmit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .signupText {
   text-align: center;
-  color: #666;
-  margin: 0;
-  font-size: 0.9rem;
+  color: #5a6a85;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
-.signupText a {
-  color: rgb(224, 199, 58);
-  text-decoration: none;
+.signupText button {
+  background: none;
+  border: none;
+  color: #e0c73a;
   font-weight: 600;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  transition: color 0.2s ease;
 }
 
-.signupText a:hover {
-  text-decoration: underline;
-  color: rgb(200, 175, 40);
+.signupText button:hover {
+  color: #f0d84a;
 }
+
+/* ═══════════════════════════
+   RESPONSIVE
+   ═══════════════════════════ */
 
 @media (max-width: 768px) {
-  .headerBox {
-    gap: 1rem;
+  .header {
+    height: 54px;
+  }
+
+  .burgerMenu {
+    top: 54px;
+    height: calc(100vh - 54px);
   }
 
   .titleHeader {
     font-size: 1rem;
   }
 
-  .loginModal {
-    width: 95%;
-    padding: 2rem;
-  }
-
-  .header {
-    height: 4em;
-    padding: 0.5rem 0;
+  .logInButton {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.82rem;
   }
 }
 
 @media (max-width: 480px) {
   .header {
-    height: 3.5em;
-    padding: 0.5rem 0;
+    height: 50px;
   }
 
   .headerBox {
+    padding: 0 0.875rem;
     gap: 0.5rem;
-    padding-top: 0.1rem;
   }
 
   .titleHeader {
-    font-size: 0.95rem;
-  }
-
-  .headerLeftButtons,
-  .headerRightButton {
-    padding: 0.3rem;
+    font-size: 0.9rem;
   }
 
   .logInButton {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
   }
 
   .burgerMenu {
     width: 100%;
     left: -100%;
+    top: 50px;
+    height: calc(100vh - 50px);
   }
 
   .loginModal {
-    width: 95%;
-    max-width: 90vw;
+    max-width: 100%;
+    border-radius: 16px;
     padding: 1.5rem;
-  }
-
-  .loginHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .loginHeader h2 {
-    font-size: 1.3rem;
-  }
-
-  .loginForm {
-    gap: 1rem;
-  }
-
-  .formGroup input {
-    padding: 0.6rem;
-    font-size: 16px;
   }
 }

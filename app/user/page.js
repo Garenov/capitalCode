@@ -54,8 +54,33 @@ export default function UserPage() {
         router.push('/');
     };
 
-    const downloadPDF = () => {
-        window.open('/ccBook.pdf', '_blank');
+    const downloadPDF = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+
+        try {
+            const res = await fetch('/api/download', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                alert(data.message || 'Download failed.');
+                return;
+            }
+
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'CapitalCode.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        } catch {
+            alert('Network error. Please try again.');
+        }
     };
 
     if (!user) {
@@ -77,22 +102,22 @@ export default function UserPage() {
                             {user.phone && <p>{user.phone}</p>}
                         </div>
                         <button onClick={handleLogout} className={styles.logoutButton}>
-                            Odhlásit se
+                            Log Out
                         </button>
                     </div>
 
                     <div className={styles.section}>
-                        <h2>Moje objednávky</h2>
+                        <h2>My Orders</h2>
                         {loading ? (
-                            <p className={styles.loading}>Načítání...</p>
+                            <p className={styles.loading}>Loading...</p>
                         ) : purchases.length === 0 ? (
                             <div className={styles.emptyState}>
-                                <p>Zatím nemáte žádné objednávky</p>
+                                <p>You don&apos;t have any orders yet</p>
                                 <button
                                     onClick={() => router.push('/pricing')}
                                     className={styles.shopButton}
                                 >
-                                    Prohlédnout nabídku
+                                    Browse Products
                                 </button>
                             </div>
                         ) : (
@@ -100,25 +125,25 @@ export default function UserPage() {
                                 {purchases.map((purchase) => (
                                     <div key={purchase.id} className={styles.purchaseCard}>
                                         <div className={styles.purchaseHeader}>
-                                            <h3>{purchase.planName} Edice</h3>
+                                            <h3>{purchase.planName} Edition</h3>
                                             <span className={`${styles.status} ${styles[purchase.status]}`}>
-                                                {purchase.status === 'completed' ? 'Dokončeno' :
-                                                    purchase.status === 'pending' ? 'Čeká' : 'Zrušeno'}
+                                                {purchase.status === 'completed' ? 'Completed' :
+                                                    purchase.status === 'pending' ? 'Pending' : 'Cancelled'}
                                             </span>
                                         </div>
                                         <div className={styles.purchaseDetails}>
                                             <div className={styles.detail}>
-                                                <span className={styles.label}>Cena:</span>
+                                                <span className={styles.label}>Price:</span>
                                                 <span className={styles.value}>{purchase.price} {purchase.currency}</span>
                                             </div>
                                             <div className={styles.detail}>
-                                                <span className={styles.label}>Datum:</span>
+                                                <span className={styles.label}>Date:</span>
                                                 <span className={styles.value}>
-                                                    {new Date(purchase.purchaseDate).toLocaleDateString('cs-CZ')}
+                                                    {new Date(purchase.purchaseDate).toLocaleDateString('en-US')}
                                                 </span>
                                             </div>
                                             <div className={styles.detail}>
-                                                <span className={styles.label}>Počet kusů:</span>
+                                                <span className={styles.label}>Quantity:</span>
                                                 <span className={styles.value}>{purchase.devices}</span>
                                             </div>
                                         </div>
@@ -128,7 +153,7 @@ export default function UserPage() {
                                                     onClick={downloadPDF}
                                                     className={styles.downloadButton}
                                                 >
-                                                    📥 Stáhnout PDF
+                                                    📥 Download PDF
                                                 </button>
                                             )}
                                     </div>
@@ -138,10 +163,10 @@ export default function UserPage() {
                     </div>
 
                     <div className={styles.section}>
-                        <h2>Informace o účtu</h2>
+                        <h2>Account Information</h2>
                         <div className={styles.accountInfo}>
                             <div className={styles.infoRow}>
-                                <span className={styles.label}>Jméno:</span>
+                                <span className={styles.label}>Name:</span>
                                 <span className={styles.value}>{user.name}</span>
                             </div>
                             <div className={styles.infoRow}>
@@ -150,14 +175,14 @@ export default function UserPage() {
                             </div>
                             {user.phone && (
                                 <div className={styles.infoRow}>
-                                    <span className={styles.label}>Telefon:</span>
+                                    <span className={styles.label}>Phone:</span>
                                     <span className={styles.value}>{user.phone}</span>
                                 </div>
                             )}
                             <div className={styles.infoRow}>
-                                <span className={styles.label}>Registrován:</span>
+                                <span className={styles.label}>Registered:</span>
                                 <span className={styles.value}>
-                                    {new Date(user.createdAt).toLocaleDateString('cs-CZ')}
+                                    {new Date(user.createdAt).toLocaleDateString('en-US')}
                                 </span>
                             </div>
                         </div>

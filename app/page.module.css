@@ -1,5 +1,5 @@
 .page {
-  background: linear-gradient(135deg, #0d1b35 0%, #273d69 55%, #0d1b35 100%);
+  background: radial-gradient(ellipse 100% 70% at 50% -5%, #142b58 0%, #07101f 60%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -9,11 +9,13 @@
 .main {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 3rem 1.5rem;
+  justify-content: flex-start;
+  padding: 5.5rem 1.5rem 3rem;
   width: 100%;
   box-sizing: border-box;
+  gap: 3rem;
 }
 
 .mainBox {
@@ -21,7 +23,7 @@
   gap: 4rem;
   width: 100%;
   max-width: 1400px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .projectDescription {
@@ -33,15 +35,16 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #f0f0f0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   height: fit-content;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .projectDescription:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
 }
 
 .projectDescription h3 {
@@ -108,18 +111,19 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #f0f0f0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   height: 600px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bookDescription:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
 }
 
 .bookDescription h3 {
@@ -180,10 +184,221 @@
   display: block;
 }
 
+/* ─── Section Titles ─── */
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  background: linear-gradient(135deg, #fff 0%, #e0c73a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+/* ─── Reviews Marquee ─── */
+.reviewsSection {
+  width: 100%;
+  max-width: 1400px;
+  overflow: hidden;
+}
+
+.reviewsOverflow {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.reviewsTrack {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scrollReviews 40s linear infinite;
+}
+
+@keyframes scrollReviews {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.reviewCard {
+  flex-shrink: 0;
+  width: 320px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.reviewCard:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(224, 199, 58, 0.4);
+  box-shadow: 0 6px 28px rgba(224, 199, 58, 0.15);
+}
+
+.reviewStars {
+  font-size: 1.1rem;
+  color: #e0c73a;
+  letter-spacing: 2px;
+}
+
+.reviewText {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #d0d0d0;
+  margin: 0;
+  flex: 1;
+}
+
+.reviewAuthor {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e0c73a;
+  opacity: 0.85;
+}
+
+/* ─── Discord Section (Marquee) ─── */
+.discordSection {
+  width: 100%;
+  max-width: 1400px;
+  overflow: hidden;
+}
+
+.discordOverflow {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.discordTrack {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scrollDiscord 35s linear infinite;
+}
+
+@keyframes scrollDiscord {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.discordImageWrap {
+  flex-shrink: 0;
+  width: min(420px, 85vw);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 40px rgba(88, 101, 242, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.discordImageWrap:hover {
+  box-shadow: 0 12px 50px rgba(88, 101, 242, 0.35), 0 6px 28px rgba(0, 0, 0, 0.4);
+  border-color: rgba(88, 101, 242, 0.4);
+}
+
+.discordImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 15px;
+}
+
+/* ─── Lightbox ─── */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: fadeInLightbox 0.25s ease;
+}
+
+@keyframes fadeInLightbox {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxClose {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 1.6rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 3001;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.lightboxImage {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  animation: lightboxScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes lightboxScale {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════════ */
+
 /* Desktop Optimization (1025px+) */
 @media (min-width: 1025px) {
   .main {
-    padding: 4rem 3rem;
+    padding: 7rem 3rem 4rem;
+    gap: 4rem;
   }
 
   .mainBox {
@@ -230,12 +445,22 @@
     padding: 1.2rem 2rem;
     font-size: 1.1rem;
   }
+
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .reviewCard {
+    width: 360px;
+  }
 }
 
 /* Tablet (768px - 1024px) */
 @media (max-width: 1024px) {
   .main {
-    padding: 2rem 1.5rem;
+    padding: 6rem 1.5rem 2rem;
+    gap: 2.5rem;
   }
 
   .mainBox {
@@ -285,6 +510,23 @@
     padding: 0.9rem 1.5rem;
     font-size: 1rem;
   }
+
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+
+  .reviewCard {
+    width: 280px;
+    padding: 1.25rem;
+  }
+
+  .reviewsTrack {
+    animation-duration: 30s;
+  }
+
+  .discordGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Mobile (480px - 768px) */
@@ -294,8 +536,8 @@
   }
 
   .main {
-    padding: 1.5rem 1rem;
-    gap: 1rem;
+    padding: 5.5rem 1rem 1.5rem;
+    gap: 2rem;
   }
 
   .mainBox {
@@ -353,12 +595,43 @@
     padding: 0.8rem 1.2rem;
     font-size: 0.95rem;
   }
+
+  .sectionTitle {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .reviewCard {
+    width: 260px;
+    padding: 1.2rem;
+  }
+
+  .reviewsTrack {
+    animation-duration: 25s;
+  }
+
+  .discordGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .discordImageWrap {
+    border-radius: 12px;
+  }
+
+  .lightboxClose {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
 }
 
 /* Mobile Small (480px and below) */
 @media (max-width: 480px) {
   .main {
-    padding: 1rem 0.75rem;
+    padding: 5rem 0.75rem 1rem;
+    gap: 1.5rem;
   }
 
   .mainBox {
@@ -369,6 +642,10 @@
   .bookDescription {
     padding: 1.25rem;
     border-radius: 12px;
+    height: auto;
+  }
+
+  .bookDescription {
     height: 350px;
   }
 
@@ -394,5 +671,45 @@
   .buyButton {
     padding: 0.7rem 1rem;
     font-size: 0.9rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .reviewCard {
+    width: 240px;
+    padding: 1rem;
+  }
+
+  .reviewStars {
+    font-size: 1rem;
+  }
+
+  .reviewText {
+    font-size: 0.82rem;
+  }
+
+  .reviewsTrack {
+    animation-duration: 20s;
+    gap: 1rem;
+  }
+
+  .discordGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .discordImageWrap {
+    border-radius: 10px;
+  }
+
+  .lightboxClose {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
   }
 }

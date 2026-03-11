@@ -1,0 +1,106 @@
+/* ═══════════════════════════
+   COOKIE CONSENT BANNER
+   ═══════════════════════════ */
+
+.banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  padding: 1rem;
+  animation: _cookie_slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes _cookie_slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.75rem;
+  background: rgba(13, 24, 45, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-lg, 18px);
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.4);
+}
+
+.message {
+  flex: 1;
+  color: var(--text-secondary, #9baec8);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.link {
+  color: var(--gold, #e0c73a);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:hover {
+  color: #f0d84a;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.acceptBtn {
+  padding: 0.6rem 1.4rem;
+  background: var(--gold, #e0c73a);
+  color: #07101f;
+  border: none;
+  border-radius: var(--r-sm, 8px);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.acceptBtn:hover {
+  background: #f0d84a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(224, 199, 58, 0.3);
+}
+
+.rejectBtn {
+  padding: 0.6rem 1.4rem;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-secondary, #9baec8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-sm, 8px);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rejectBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary, #f0f4ff);
+}
+
+@media (max-width: 640px) {
+  .content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+  }
+}

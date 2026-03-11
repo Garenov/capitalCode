@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ToastProvider } from "@/app/components/Toast";
+import { LanguageProvider } from "@/lib/i18n";
+import CookieConsent from "@/app/components/CookieConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +20,6 @@ export const metadata = {
   title: "Capital Code - Financial Strategy & Analysis",
   description: "Unlock the secrets of financial strategy with The Capital Code. Learn disciplined investing and long-term value creation.",
   keywords: "finance, investing, capital, strategy, trading",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
-  themeColor: "#091141",
   robots: "index, follow",
   author: "Capital Code",
   openGraph: {
@@ -28,18 +29,30 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 5.0,
+  themeColor: "#091141",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-        <meta name="theme-color" content="#091141" />
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <LanguageProvider>
+          <ToastProvider>
+            {children}
+            <CookieConsent />
+          </ToastProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
 }
+
+
