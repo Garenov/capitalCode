@@ -83,7 +83,9 @@ img {
 button {
   font-family: inherit;
   font-size: inherit;
-  -webkit-tap-highlight-color: transparent; /* kill mobile tap flash */
+  /* Eliminate 300ms tap delay and blue flash on mobile */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* Remove default focus ring on click; keep for keyboard nav */
@@ -99,9 +101,11 @@ textarea:focus:not(:focus-visible) {
 a {
   color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-/* ── Shared glass card ── */
+/* ── Shared glass card (DESKTOP) ── */
 .glass-card {
   background: var(--bg-surface);
   backdrop-filter: blur(16px);
@@ -116,27 +120,71 @@ a {
   outline-offset: 3px;
 }
 
-/* ── GPU compositing for animated elements ── */
-/* Prevents paint flicker on hover/click transitions */
-[class*="card"],
-[class*="Button"],
-[class*="button"],
-[class*="Wrap"],
-[class*="Track"] {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* ── GPU compositing — DESKTOP only ──
+   will-change is expensive on mobile (forces layer creation for every matched
+   element). We scope it to desktop only where GPU memory is plentiful.
+   On mobile we rely on explicit animation/transition triggers instead.       */
+@media (min-width: 861px) {
+  [class*="card"],
+  [class*="Button"],
+  [class*="button"],
+  [class*="Wrap"],
+  [class*="Track"] {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 99px;
+/* ── Mobile: disable expensive blur + simplify glass ──
+   backdrop-filter forces a compositing layer + GPU texture read on every
+   frame. On low-end mobile chips this is the #1 jank source.              */
+@media (max-width: 860px) {
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 22, 44, 0.92) !important;
+  }
+
+  /* Disable smooth scroll on mobile — iOS scrolls own momentum already */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Reduce animation durations by 40% on mobile to feel snappier */
+  * {
+    animation-duration: 60% !important;
+    transition-duration: 60% !important;
+  }
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+/* ── Reduced motion: honor system preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Content visibility (deferred paint for below-fold sections) ── */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* ── Scrollbar (desktop only — mobile has native scrollbar) ── */
+@media (min-width: 861px) {
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+}
 
 /* ── Selection ── */
 ::selection { background: var(--gold-glow); color: #fff; }

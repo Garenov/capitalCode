@@ -21,10 +21,29 @@ export default function Header() {
   ], [t]);
 
   // Shrink header on scroll
+  // Debounced scroll: only update state when crossing the 40px threshold.
+  // Avoids up to 60 setState calls/sec during scroll on low-end devices.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let rafId = null;
+    let lastScrolled = false;
+
+    const onScroll = () => {
+      if (rafId) return; // already scheduled
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const nowScrolled = window.scrollY > 40;
+        if (nowScrolled !== lastScrolled) {
+          lastScrolled = nowScrolled;
+          setScrolled(nowScrolled);
+        }
+      });
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Check auth

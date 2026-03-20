@@ -184,6 +184,18 @@
   display: block;
 }
 
+.pdfPlaceholder {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9baec8;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+}
+
 /* ─── Section Titles ─── */
 .sectionTitle {
   font-size: 1.8rem;
@@ -761,3 +773,42 @@
     font-size: 1.2rem;
   }
 }
+
+/* ═══════════════════════════════════════════
+   MOBILE PERFORMANCE OVERRIDES
+   Disables GPU-heavy effects below 860px.
+   Desktop behaviour is completely unchanged.
+   ═══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  /* Disable expensive backdrop-filter on all glass cards */
+  .projectDescription,
+  .bookDescription,
+  .reviewCard,
+  .lightboxOverlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Use slightly more opaque solid bg to compensate for loss of blur */
+    background-color: rgba(10, 22, 44, 0.92) !important;
+  }
+
+  /* Remove hover transform — mobile has no hover; removing it means the
+     browser doesn't reserve a composite layer for an effect that never fires */
+  .projectDescription:hover,
+  .bookDescription:hover,
+  .reviewCard:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Avoid will-change overhead on carousel track during scroll */
+  .carouselTrack {
+    will-change: auto;
+  }
+
+  /* Hide lightbox backdrop blur (overlay already dark enough) */
+  .lightboxOverlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.92) !important;
+  }
+}

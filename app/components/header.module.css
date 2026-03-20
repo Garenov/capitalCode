@@ -504,3 +504,42 @@
   .header.scrolled { height: 50px; }
   .backdrop { top: 54px; }
 }
+
+/* ═══════════════════════════════════════
+   MOBILE PERFORMANCE OVERRIDES
+   ═══════════════════════════════════════ */
+@media (max-width: 860px) {
+  /* Mobile nav dropdown: drop blur — it's rendered on top of a nearly-opaque bg
+     so the visual difference is imperceptible, but the GPU savings are large */
+  .mobileNav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(5, 14, 30, 0.99) !important;
+  }
+
+  /* Menu backdrop: a simple dark overlay is enough */
+  .backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Login modal: drop blur, compensate with solid bg */
+  .loginOverlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.85) !important;
+  }
+  .loginModal {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(7, 16, 31, 0.99) !important;
+  }
+
+  /* Remove hover-state transforms — no hover on touchscreens */
+  .supportBtn:hover,
+  .loginBtn:hover,
+  .userBtn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}

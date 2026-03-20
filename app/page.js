@@ -54,13 +54,33 @@ export default function Home() {
   const [reviews, setReviews] = React.useState(fallbackReviews);
   const [lightboxSrc, setLightboxSrc] = React.useState(null);
 
-  // Responsive reviews per page
+  // Responsive reviews per page — debounced to avoid spam on resize/orientation-change
   const [reviewsPerPage, setReviewsPerPage] = React.useState(3);
   React.useEffect(() => {
-    const update = () => setReviewsPerPage(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
+    let timer;
+    const update = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setReviewsPerPage(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
+      }, 150);
+    };
     update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener("resize", update, { passive: true });
+    return () => { window.removeEventListener("resize", update); clearTimeout(timer); };
+  }, []);
+
+  // Lazy-load PDF iframe — avoids blocking the main thread on mobile before the
+  // user has even scrolled to the book section.
+  const pdfRef = React.useRef(null);
+  const [pdfVisible, setPdfVisible] = React.useState(false);
+  React.useEffect(() => {
+    if (!pdfRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setPdfVisible(true); obs.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    obs.observe(pdfRef.current);
+    return () => obs.disconnect();
   }, []);
 
   const reviewCarousel = useCarousel(reviews.length, reviewsPerPage);
@@ -115,13 +135,20 @@ export default function Home() {
             <h3>Book Description</h3>
             <div className={styles.bookContent}>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <div className={styles.pdfContainer}>
+              <div className={styles.pdfContainer} ref={pdfRef}>
                 <div className={styles.bookClassic}>
-                  <iframe
-                    src="/ccBook.pdf#toolbar=0&navpanes=0&view=FitH"
-                    title="Capital Code Book PDF"
-                    className={styles.pdfViewer}
-                  />
+                  {pdfVisible ? (
+                    <iframe
+                      src="/ccBook.pdf#toolbar=0&navpanes=0&view=FitH"
+                      title="Capital Code Book PDF"
+                      className={styles.pdfViewer}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.pdfPlaceholder}>
+                      <span>📖 Scroll to load preview</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -129,7 +156,7 @@ export default function Home() {
         </div>
 
         {/* ─── Reviews Carousel ─── */}
-        <section className={styles.reviewsSection}>
+        <section className={`${styles.reviewsSection} cv-auto`}>
           <h3 className={styles.sectionTitle}>What Readers Say</h3>
 
           <div
@@ -193,7 +220,7 @@ export default function Home() {
         </section>
 
         {/* ─── Discord Screenshots Carousel ─── */}
-        <section className={styles.discordSection}>
+        <section className={`${styles.discordSection} cv-auto`}>
           <h3 className={styles.sectionTitle}>From Our Discord Community</h3>
 
           <div
