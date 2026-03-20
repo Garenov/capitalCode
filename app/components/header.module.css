@@ -1,6 +1,6 @@
-/* ═══════════════════════════
-   HEADER
-   ═══════════════════════════ */
+/* ═══════════════════════════════════════
+   HEADER — 2025 inline nav design
+   ═══════════════════════════════════════ */
 
 .header {
   position: fixed;
@@ -12,78 +12,182 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  transition: background var(--transition, 0.25s ease);
+  transition: height 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
+.header.scrolled {
+  height: 54px;
+  background: rgba(7, 16, 31, 0.96);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Inner layout ── */
 .headerBox {
   display: flex;
   align-items: center;
-  gap: 1rem;
   height: 100%;
   padding: 0 1.5rem;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
+  gap: 0.5rem;
 }
 
-/* ── Logo / title ── */
-.titleHeader {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  flex-grow: 1;
-  text-align: center;
-  white-space: nowrap;
-
-  /* Gold shimmer effect */
-  background: linear-gradient(
-    90deg,
-    #c8b033 0%,
-    #f5e878 25%,
-    #e0c73a 50%,
-    #f5e878 75%,
-    #c8b033 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: _hdr_shimmer 3s ease-in-out infinite;
-  text-shadow: none;
-  filter: drop-shadow(0 0 8px rgba(224, 199, 58, 0.25));
-}
-
-@keyframes _hdr_shimmer {
-  0%   { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
-
-
-
-/* ── Icon buttons ── */
-.headerLeftButtons,
-.headerRightButton {
+/* ── Logo ── */
+.logo {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  color: #f0f4ff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.4px;
+  padding: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.logo:hover { color: #e0c73a; }
+
+/* ── Desktop inline nav ── */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 1.75rem;
+  flex-grow: 1;
+}
+
+.navLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9baec8;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0f4ff;
+}
+
+.navLinkActive {
+  color: #e0c73a;
+  background: rgba(224, 199, 58, 0.08);
+}
+
+.navLinkActive:hover {
+  background: rgba(224, 199, 58, 0.12);
+  color: #e0c73a;
+}
+
+/* ── Right actions group ── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Support button — highly visible ── */
+.supportBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  background: rgba(224, 199, 58, 0.12);
+  border: 1px solid rgba(224, 199, 58, 0.3);
+  border-radius: 8px;
+  color: #e0c73a;
+  font-size: 0.83rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.supportBtn:hover {
+  background: rgba(224, 199, 58, 0.2);
+  border-color: rgba(224, 199, 58, 0.5);
+  box-shadow: 0 0 16px rgba(224, 199, 58, 0.18);
+  transform: translateY(-1px);
+}
+
+.supportIcon { font-size: 1rem; line-height: 1; }
+.supportLabel { font-size: 0.83rem; }
+
+/* ── Generic icon button ── */
+.iconBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9baec8;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9baec8;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: background 0.2s, color 0.2s;
+}
+
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0f4ff;
+}
+
+/* ── User menu ── */
+.userMenu { position: relative; }
+.userBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 9px;
+  cursor: pointer;
+  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.userBtn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(224, 199, 58, 0.3);
+}
+
+.userAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1d3a6e, #2c5aa0);
+  border: 1.5px solid rgba(224, 199, 58, 0.4);
+  color: #f0f4ff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.headerLeftButtons:hover,
-.headerRightButton:hover {
+.userName {
   color: #f0f4ff;
-  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.83rem;
+  font-weight: 600;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ── CTA button ── */
-.logInButton {
+/* ── Login CTA ── */
+.loginBtn {
   padding: 0.45rem 1.1rem;
   background: #e0c73a;
   border: none;
@@ -91,126 +195,126 @@
   color: #07101f;
   font-weight: 700;
   font-size: 0.875rem;
-  letter-spacing: 0.2px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
-.logInButton:hover {
+.loginBtn:hover {
   background: #f0d84a;
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(224, 199, 58, 0.35);
 }
 
-.logInButton:active {
-  transform: translateY(0);
-}
-
-/* ═══════════════════════════
-   BURGER MENU (slide drawer)
-   ═══════════════════════════ */
-
-.burgerMenu {
-  position: fixed;
-  left: -300px;
-  top: 60px;
-  width: 272px;
-  height: calc(100vh - 60px);
-  background: rgba(10, 20, 40, 0.97);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
-  z-index: 999;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
+/* ── Hamburger (mobile only) ── */
+.hamburger {
+  display: none;
   flex-direction: column;
-}
-
-.burgerMenu.menuOpen {
-  left: 0;
-}
-
-.menuHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.menuHeader h2 {
-  margin: 0;
-  color: #f0f4ff;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-}
-
-.closeButton {
-  background: none;
-  border: none;
-  color: #9baec8;
-  font-size: 1.25rem;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  gap: 4.5px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 6px;
+  transition: background 0.2s;
 }
 
-.closeButton:hover {
-  color: #f0f4ff;
-  background: rgba(255, 255, 255, 0.08);
-  transform: rotate(90deg);
+.hamburger:hover { background: rgba(255, 255, 255, 0.08); }
+
+.bar {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: #9baec8;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
 }
 
-.menuNav {
-  display: flex;
+.barOpen1 { transform: translateY(6.5px) rotate(45deg); background: #f0f4ff; }
+.barOpen2 { opacity: 0; transform: scaleX(0); }
+.barOpen3 { transform: translateY(-6.5px) rotate(-45deg); background: #f0f4ff; }
+
+/* ── Mobile dropdown nav ── */
+.mobileNav {
+  display: none;
   flex-direction: column;
-  padding: 0.75rem 0;
+  background: rgba(7, 16, 31, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menuLink {
-  padding: 0.85rem 1.5rem;
+.mobileNavOpen {
+  max-height: 400px;
+}
+
+.mobileLink {
+  padding: 1rem 1.5rem;
   background: none;
   border: none;
-  border-left: 2px solid transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: #9baec8;
   font-size: 0.95rem;
   font-weight: 500;
   text-align: left;
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, padding-left 0.2s ease;
+  transition: background 0.2s, color 0.2s, padding-left 0.2s;
 }
 
-.menuLink:hover {
-  background: rgba(224, 199, 58, 0.07);
-  border-left-color: #e0c73a;
-  padding-left: 2rem;
+.mobileLink:hover,
+.mobileLinkActive {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f4ff;
+  padding-left: 1.85rem;
+}
+
+.mobileLinkActive {
   color: #e0c73a;
+  border-left: 2px solid #e0c73a;
+  padding-left: calc(1.5rem - 2px);
 }
 
+.mobileSupportLink {
+  padding: 1rem 1.5rem;
+  background: rgba(224, 199, 58, 0.06);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e0c73a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobileSupportLink:hover {
+  background: rgba(224, 199, 58, 0.12);
+}
+
+/* ── Backdrop (mobile menu) ── */
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  top: 60px;
+  background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(2px);
   z-index: 998;
 }
 
-/* ═══════════════════════════
+/* ═══════════════════════════════════════
    LOGIN MODAL
-   ═══════════════════════════ */
+   ═══════════════════════════════════════ */
 
 .loginOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -218,80 +322,74 @@
   justify-content: center;
   z-index: 2000;
   padding: 1rem;
-  animation: _hdr_fadeIn 0.2s ease;
+  animation: _fadeIn 0.2s ease;
 }
 
-@keyframes _hdr_fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+@keyframes _fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .loginModal {
-  background: rgba(13, 24, 45, 0.95);
+  background: rgba(10, 20, 42, 0.97);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: 22px;
+  padding: 2.25rem;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.6);
-  animation: _hdr_slideUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+  animation: _slideUp 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes _hdr_slideUp {
-  from {
-    transform: translateY(24px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes _slideUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
 .loginHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1.75rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.loginHeader h2 {
-  margin: 0;
+.loginTitle {
+  margin: 0 0 0.25rem;
   color: #f0f4ff;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
 }
 
-.loginHeader button {
-  /* close X inside header */
-  background: none;
-  border: none;
+.loginSubtitle {
+  margin: 0;
+  color: #5a6a85;
+  font-size: 0.83rem;
+}
+
+.closeButton {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #9baec8;
-  font-size: 1.25rem;
+  font-size: 1rem;
   cursor: pointer;
   width: 32px;
   height: 32px;
-  border-radius: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s, background 0.2s, transform 0.2s;
+  flex-shrink: 0;
 }
 
-.loginHeader button:hover {
+.closeButton:hover {
   color: #f0f4ff;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
   transform: rotate(90deg);
 }
 
@@ -308,60 +406,55 @@
 }
 
 .formGroup label {
-  color: #9baec8;
-  font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
+  color: #5a6a85;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
 }
 
 .formGroup input {
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 10px;
   font-size: 0.95rem;
   color: #f0f4ff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-.formGroup input::placeholder {
-  color: #5a6a85;
-}
+.formGroup input::placeholder { color: #5a6a85; }
 
 .formGroup input:focus {
   outline: none;
-  border-color: rgba(224, 199, 58, 0.5);
+  border-color: rgba(224, 199, 58, 0.45);
   box-shadow: 0 0 0 3px rgba(224, 199, 58, 0.10);
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .loginSubmit {
-  padding: 0.85rem;
+  padding: 0.9rem;
   background: #e0c73a;
   border: none;
-  border-radius: 10px;
+  border-radius: 11px;
   color: #07101f;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.95rem;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  margin-top: 0.35rem;
+  margin-top: 0.25rem;
   letter-spacing: 0.2px;
 }
 
 .loginSubmit:hover {
   background: #f0d84a;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(224, 199, 58, 0.3);
-}
-
-.loginSubmit:active {
-  transform: translateY(0);
+  box-shadow: 0 6px 22px rgba(224, 199, 58, 0.32);
 }
 
 .loginSubmit:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
@@ -369,8 +462,8 @@
 .signupText {
   text-align: center;
   color: #5a6a85;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  font-size: 0.83rem;
+  margin: 0;
 }
 
 .signupText button {
@@ -380,67 +473,34 @@
   font-weight: 600;
   cursor: pointer;
   font-size: inherit;
+  font-family: inherit;
   padding: 0;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.signupText button:hover {
-  color: #f0d84a;
-}
+.signupText button:hover { color: #f0d84a; }
 
-/* ═══════════════════════════
+/* ═══════════════════════════════════════
    RESPONSIVE
-   ═══════════════════════════ */
+   ═══════════════════════════════════════ */
 
-@media (max-width: 768px) {
-  .header {
-    height: 54px;
-  }
-
-  .burgerMenu {
-    top: 54px;
-    height: calc(100vh - 54px);
-  }
-
-  .titleHeader {
-    font-size: 1rem;
-  }
-
-  .logInButton {
-    padding: 0.4rem 0.85rem;
-    font-size: 0.82rem;
-  }
+@media (max-width: 860px) {
+  /* Hide desktop nav + desktop support btn, show hamburger */
+  .desktopNav { display: none; }
+  .supportBtn .supportLabel { display: none; }
+  .supportBtn { padding: 0.45rem 0.65rem; }
+  .hamburger { display: flex; }
+  .mobileNav { display: flex; }
+  .userName { display: none; }
 }
 
 @media (max-width: 480px) {
-  .header {
-    height: 50px;
-  }
-
-  .headerBox {
-    padding: 0 0.875rem;
-    gap: 0.5rem;
-  }
-
-  .titleHeader {
-    font-size: 0.9rem;
-  }
-
-  .logInButton {
-    padding: 0.35rem 0.7rem;
-    font-size: 0.8rem;
-  }
-
-  .burgerMenu {
-    width: 100%;
-    left: -100%;
-    top: 50px;
-    height: calc(100vh - 50px);
-  }
-
-  .loginModal {
-    max-width: 100%;
-    border-radius: 16px;
-    padding: 1.5rem;
-  }
+  .headerBox { padding: 0 1rem; gap: 0.35rem; }
+  .logo { font-size: 0.95rem; }
+  .supportBtn { display: none; } /* shown in mobile nav instead */
+  .loginModal { border-radius: 16px; padding: 1.75rem; }
+  .header.scrolled { height: 50px; }
+  .backdrop { top: 54px; }
 }

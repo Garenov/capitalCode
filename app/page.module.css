@@ -197,50 +197,64 @@
   text-align: center;
 }
 
-/* ─── Reviews Marquee ─── */
-.reviewsSection {
+/* ─── Shared Carousel ─── */
+
+/* Sections wrap the carousel + dots */
+.reviewsSection,
+.discordSection {
   width: 100%;
-  max-width: 1400px;
-  overflow: hidden;
+  max-width: 1200px;
 }
 
-.reviewsOverflow {
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-}
-
-.reviewsTrack {
+/* Outer wrapper: holds arrows + viewport side by side */
+.carouselWrapper {
+  position: relative;
   display: flex;
-  gap: 1.5rem;
-  width: max-content;
-  animation: scrollReviews 40s linear infinite;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
 }
 
-@keyframes scrollReviews {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+/* Clips sliding content */
+.carouselViewport {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 18px;
+  min-width: 0;
 }
 
+/* Flex row of all pages — moves via translateX */
+.carouselTrack {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* One "page" — full viewport width, displays as flex row of cards */
+.carouselPage {
+  flex: 0 0 100%;
+  width: 100%;
+  display: flex;
+  gap: 1.25rem;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 0 0.25rem;
+}
+
+/* Review card inside a carousel page */
 .reviewCard {
-  flex-shrink: 0;
-  width: 320px;
+  flex: 1;
+  min-width: 0;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(12px);
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .reviewCard:hover {
@@ -257,60 +271,84 @@
 
 .reviewText {
   font-size: 0.9rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #d0d0d0;
   margin: 0;
   flex: 1;
+  font-style: italic;
 }
 
 .reviewAuthor {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #e0c73a;
-  opacity: 0.85;
 }
 
-/* ─── Discord Section (Marquee) ─── */
-.discordSection {
-  width: 100%;
-  max-width: 1400px;
-  overflow: hidden;
-}
-
-.discordOverflow {
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-}
-
-.discordTrack {
-  display: flex;
-  gap: 1.5rem;
-  width: max-content;
-  animation: scrollDiscord 35s linear infinite;
-}
-
-@keyframes scrollDiscord {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.discordImageWrap {
+/* Prev / Next arrow buttons */
+.carouselArrow {
   flex-shrink: 0;
-  width: min(420px, 85vw);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: #f0f4ff;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.carouselArrow:hover {
+  background: rgba(224, 199, 58, 0.15);
+  border-color: rgba(224, 199, 58, 0.4);
+  box-shadow: 0 0 16px rgba(224, 199, 58, 0.18);
+  transform: scale(1.08);
+}
+
+.carouselArrow:active { transform: scale(0.96); }
+
+/* Dot indicators */
+.carouselDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, transform 0.25s, width 0.25s;
+}
+
+.dotActive {
+  background: #e0c73a;
+  width: 22px;
+  border-radius: 4px;
+  transform: scaleY(1.1);
+}
+
+/* ─── Discord image wrap inside carousel ─── */
+.discordImageWrap {
+  position: relative;
+  width: 100%;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 8px 40px rgba(88, 101, 242, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
-  will-change: transform;
-  transform: translateZ(0);
+  transition: box-shadow 0.25s, border-color 0.25s;
 }
 
 .discordImageWrap:hover {
@@ -322,7 +360,25 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 15px;
+}
+
+.discordZoom {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  color: #f0f4ff;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 99px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.discordImageWrap:hover .discordZoom {
+  opacity: 1;
 }
 
 /* ─── Lightbox ─── */
@@ -516,16 +572,13 @@
   }
 
   .reviewCard {
-    width: 280px;
     padding: 1.25rem;
   }
 
-  .reviewsTrack {
-    animation-duration: 30s;
-  }
-
-  .discordGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .carouselArrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1.5rem;
   }
 }
 
@@ -602,16 +655,13 @@
   }
 
   .reviewCard {
-    width: 260px;
     padding: 1.2rem;
   }
 
-  .reviewsTrack {
-    animation-duration: 25s;
-  }
-
-  .discordGrid {
-    grid-template-columns: 1fr;
+  .carouselArrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
   }
 
   .discordImageWrap {
@@ -691,15 +741,13 @@
     font-size: 0.82rem;
   }
 
-  .reviewsTrack {
-    animation-duration: 20s;
-    gap: 1rem;
+  .carouselArrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
   }
 
-  .discordGrid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  .carouselDots { margin-top: 1rem; }
 
   .discordImageWrap {
     border-radius: 10px;

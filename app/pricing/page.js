@@ -2,69 +2,70 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import styles from "./pricing.module.css";
 import { useToast } from "@/app/components/Toast";
 
 const pricingPlans = [
   {
-    id: 1,
-    name: "DIGITAL",
-    price: "299",
-    currency: "Kč",
+    id: "BOOK",
+    name: "Book",
+    emoji: "📖",
+    price: "$20",
     period: "one-time",
-    devices: 1,
-    description: "Digital edition of The Capital Code in PDF format. Instant access to all chapters — read on any device.",
+    badge: null,
+    highlighted: false,
+    description: "The Capital Code in a beautifully designed digital PDF. Instant access — read on any device, any time.",
     features: [
-      "Downloadable PDF (250+ pages)",
+      "Full digital PDF (250+ pages)",
       "Instant access after purchase",
-      "Readable on all devices",
-      "Full-text search",
-      "Lifetime updates",
-      "Copy-paste code snippets",
+      "All devices supported",
+      "Lifetime access & updates",
     ],
-    highlighted: false,
-    badge: "Fastest Access",
-    downloadable: true,
+    cta: "Buy Now",
+    note: "Secure one-time payment",
+    recurring: false,
   },
   {
-    id: 2,
-    name: "PHYSICAL",
-    price: "599",
-    currency: "Kč",
+    id: "PREMIUM",
+    name: "Premium Book",
+    emoji: "⭐",
+    price: "$25",
     period: "one-time",
-    devices: 1,
-    description: "Printed hardcover edition of The Capital Code. Premium paper, professional print, and free shipping.",
-    features: [
-      "Hardcover, premium print",
-      "250+ pages of quality paper",
-      "Free shipping",
-      "Full-color diagrams & illustrations",
-      "Perfect for margin notes",
-      "Collector's edition",
-    ],
-    highlighted: true,
-    badge: "Most Popular",
-    downloadable: false,
-  },
-  {
-    id: 3,
-    name: "BUNDLE",
-    price: "799",
-    currency: "Kč",
-    period: "one-time",
-    devices: 1,
-    description: "Complete package: printed book + digital PDF + bonus content. Best value for serious developers.",
-    features: [
-      "Everything in DIGITAL + PHYSICAL",
-      "Source code for all examples",
-      "Video tutorials (5+ hours)",
-      "Bonus chapter: Advanced Topics",
-      "Private Discord community access",
-      "Priority author support",
-    ],
-    highlighted: false,
     badge: "Best Value",
-    downloadable: true,
+    highlighted: true,
+    description: "Everything in Book, plus bonus chapters, source code examples, and exclusive case studies from real markets.",
+    features: [
+      "Everything in Book",
+      "Bonus chapters & case studies",
+      "Source code for all examples",
+      "Priority support channel",
+      "Downloadable worksheets",
+    ],
+    cta: "Get Premium",
+    note: "Most popular choice",
+    recurring: false,
+  },
+  {
+    id: "DISCORD",
+    name: "Discord Access",
+    emoji: "💬",
+    price: "$5",
+    period: "/month",
+    badge: "Free Trial",
+    highlighted: false,
+    description: "Join our private Discord community. Get live trading signals, market analysis, and talk directly with the author.",
+    features: [
+      "First 7 days completely free",
+      "Private Discord server",
+      "Live trading signals",
+      "Market analysis & discussion",
+      "Direct author Q&A",
+      "Cancel anytime",
+    ],
+    cta: "Start Free Trial",
+    note: "First week free · then $5/month",
+    recurring: true,
   },
 ];
 
@@ -93,7 +94,7 @@ export default function Pricing() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ planName: plan.name }),
+        body: JSON.stringify({ planName: plan.id }),
       });
 
       const data = await res.json();
@@ -103,7 +104,6 @@ export default function Pricing() {
         return;
       }
 
-      // Redirect to Stripe Checkout
       window.location.href = data.url;
     } catch {
       toast.error("Network error. Please try again.");
@@ -119,68 +119,96 @@ export default function Pricing() {
         <div className={styles.container}>
           <div className={styles.background} />
           <div className={styles.content}>
+
+            {/* Header */}
             <div className={styles.header}>
-              <h1 className={styles.title}>The Capital Code Book</h1>
-              <p className={styles.subtitle}>Learn to invest like a professional</p>
+              <h1 className={styles.title}>Simple, Honest Pricing</h1>
+              <p className={styles.subtitle}>Choose the plan that fits your learning style. No hidden fees.</p>
             </div>
+
+            {/* Cards */}
             <div className={styles.pricingGrid}>
               {pricingPlans.map((plan) => (
-                <div key={plan.id} className={`${styles.card} ${plan.highlighted ? styles.highlighted : ""}`}>
-                  {plan.highlighted && <div className={styles.highlightBadge}>MOST POPULAR EDITION</div>}
+                <div
+                  key={plan.id}
+                  className={`${styles.card} ${plan.highlighted ? styles.highlighted : ""}`}
+                >
+                  {/* Top badge (Most Popular) */}
+                  {plan.highlighted && (
+                    <div className={styles.highlightBadge}>⭐ BEST VALUE</div>
+                  )}
 
+                  {/* Plan emoji + name */}
                   <div className={styles.cardHeader}>
+                    <span className={styles.planEmoji}>{plan.emoji}</span>
                     <h2 className={styles.planName}>{plan.name}</h2>
-                    {plan.badge && <p className={styles.promotionBadge}>{plan.badge}</p>}
+                    {plan.badge && !plan.highlighted && (
+                      <span className={styles.sideBadge}>{plan.badge}</span>
+                    )}
                   </div>
 
+                  {/* Description */}
                   <p className={styles.description}>{plan.description}</p>
 
-                  <div className={styles.specs}>
-                    <div className={styles.spec}>
-                      <span className={styles.label}>QUANTITY</span>
-                      <div className={styles.specValue}>
-                        <span className={styles.number}>{plan.devices}</span>
-                      </div>
-                    </div>
-                  </div>
-
+                  {/* Price block */}
                   <div className={styles.priceSection}>
                     <div className={styles.price}>
                       <span className={styles.amount}>{plan.price}</span>
-                      <span className={styles.currencySmall}>{plan.currency}</span>
+                      {plan.period !== "one-time" && (
+                        <span className={styles.period}>{plan.period}</span>
+                      )}
                     </div>
-                    <p style={{ fontSize: 12, color: "#888", margin: "4px 0 0" }}>Secure payment via Stripe</p>
+                    {plan.recurring && (
+                      <p className={styles.trialNote}>🎉 First 7 days completely FREE</p>
+                    )}
                   </div>
 
+                  {/* CTA */}
                   <button
-                    className={`${styles.buyButton} ${plan.highlighted ? styles.buyButtonHighlighted : ""}`}
+                    className={`${styles.buyButton} ${plan.highlighted ? styles.buyButtonHighlighted : ""} ${plan.recurring ? styles.buyButtonSubscribe : ""}`}
                     onClick={() => handleBuy(plan)}
                     disabled={loadingPlan === plan.id}
                   >
-                    {loadingPlan === plan.id ? "Redirecting…" : "BUY NOW"}
+                    {loadingPlan === plan.id ? "Redirecting…" : plan.cta}
                   </button>
 
-                  <button className={styles.featuresToggle} onClick={() => toggleFeatures(plan.id)}>
-                    <span>Key Features</span>
-                    <span className={styles.toggleIcon}>{expandedPlan === plan.id ? "−" : "+"}</span>
+                  <p className={styles.paymentNote}>{plan.note}</p>
+
+                  {/* Features accordion */}
+                  <button
+                    className={styles.featuresToggle}
+                    onClick={() => toggleFeatures(plan.id)}
+                    aria-expanded={expandedPlan === plan.id}
+                  >
+                    <span>What&apos;s included</span>
+                    <span className={styles.toggleIcon}>
+                      {expandedPlan === plan.id ? "−" : "+"}
+                    </span>
                   </button>
 
                   {expandedPlan === plan.id && (
-                    <div className={styles.featuresList}>
+                    <ul className={styles.featuresList}>
                       {plan.features.map((feature, idx) => (
-                        <div key={idx} className={styles.featureItem}>
+                        <li key={idx} className={styles.featureItem}>
                           <span className={styles.featureBullet}>✓</span>
                           <span>{feature}</span>
-                        </div>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   )}
                 </div>
               ))}
             </div>
+
+            {/* Security note */}
+            <p className={styles.secureNote}>
+              🔒 All payments secured by Stripe · Cancel subscription anytime
+            </p>
+
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

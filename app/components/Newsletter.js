@@ -46,8 +46,14 @@ export default function Newsletter() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <h2 className={styles.title}>{t("newsletter.title")}</h2>
+        {/* Badge */}
+        <span className={styles.badge}>✉ Newsletter</span>
+
+        <h2 className={styles.title}>
+          Stay <span>informed</span>.
+        </h2>
         <p className={styles.subtitle}>{t("newsletter.subtitle")}</p>
+
         <form className={styles.form} onSubmit={handleSubscribe}>
           <input
             type="email"
@@ -68,6 +74,7 @@ export default function Newsletter() {
             {loading ? t("newsletter.subscribing") : t("newsletter.subscribe")}
           </button>
         </form>
+        <p className={styles.privacyNote}>No spam. Unsubscribe anytime.</p>
       </div>
     </section>
   );
