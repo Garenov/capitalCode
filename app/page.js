@@ -40,7 +40,7 @@ function useCarousel(total, perPage) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     if (dx < -40) next();
-    if (dx >  40) prev();
+    if (dx > 40) prev();
     touchStartX.current = null;
   };
 

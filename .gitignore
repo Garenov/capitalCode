@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/backend/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -30,18 +31,19 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — ignore secrets, but keep the example template
+.env.development.local
+.env.test.local
+.env.production.local
+# DO NOT ignore .env.example — it's the template for Render dashboard setup
+# !.env.example — already not ignored since no wildcard covers it
 
 # vercel
 .vercel
 
+# render
+.render-buildpacks.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-
-node_modules
-.next
-.env
-.env.local
