@@ -1,15 +1,15 @@
-# fly.toml app configuration file generated for capitalcode on 2026-03-22T15:11:41Z
+# fly.toml app configuration file generated for capitalcode--eshdq on 2026-03-22T15:56:24Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'capitalcode'
-primary_region = 'fra'
+app = 'capitalcode--eshdq'
+primary_region = 'iad'
 
 [build]
 
 [http_service]
-  internal_port = 8080
+  internal_port = 3000
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -20,4 +20,4 @@ primary_region = 'fra'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 512
+  memory_mb = 1024
