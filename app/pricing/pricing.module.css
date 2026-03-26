@@ -1,12 +1,15 @@
 /* ═══════════════════════════
-   PRICING PAGE
+   PRICING PAGE  2026
    ═══════════════════════════ */
 
 .page {
-  background: radial-gradient(ellipse 100% 70% at 50% -10%, #143060 0%, #07101f 55%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(124,58,237,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 110%, rgba(0,212,255,0.13) 0%, transparent 50%),
+    #030812;
 }
 
 .mainContent {
@@ -18,17 +21,14 @@
 
 .container {
   position: relative;
-  padding: 0;
   width: 100%;
 }
 
-/* Removed legacy .background div — the page bg handles it */
-.background {
-  display: none;
-}
+/* hide legacy bg div */
+.background { display: none; }
 
 .content {
-  max-width: 1280px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   position: relative;
@@ -42,19 +42,22 @@
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
-  color: #f0f4ff;
   letter-spacing: -1.5px;
   margin: 0 0 0.75rem;
-  line-height: 1.1;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #fff 0%, #f5de6a 50%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  color: #9baec8;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #8fa8c8;
   margin: 0;
-  max-width: 520px;
+  max-width: 500px;
   margin-inline: auto;
   line-height: 1.65;
 }
@@ -76,85 +79,118 @@
 
 /* ── Card ── */
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 22px;
-  padding: 2rem 1.75rem;
   position: relative;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  /* NOTE: NO overflow:hidden here — badge is absolutely positioned above the card
+     and needs to escape the card's bounds */
+  background: rgba(8, 16, 36, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  padding: 2rem 1.75rem;
+  /* extra top padding to give badge room */
+  padding-top: 2.25rem;
   display: flex;
   flex-direction: column;
-  will-change: transform;
-  transform: translateZ(0);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Subtle white shimmer on top edge */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  border-radius: 1px;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* ── Highlighted card (Best Value) ── */
+.highlighted {
+  border-color: rgba(232, 204, 63, 0.42);
+  background: rgba(12, 22, 50, 0.78);
+  /* extra padding-top for the badge that floats above */
+  padding-top: 2.5rem;
+  box-shadow:
+    0 0 0 1px rgba(232,204,63,0.1) inset,
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 80px rgba(232,204,63,0.1);
+}
+
+.highlighted::before {
+  background: linear-gradient(90deg, transparent, rgba(232,204,63,0.65), rgba(0,212,255,0.35), transparent);
+}
+
+.highlighted:hover {
+  border-color: rgba(232, 204, 63, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(232,204,63,0.18) inset,
+    0 28px 70px rgba(0,0,0,0.55),
+    0 0 120px rgba(232,204,63,0.15);
+}
+
+/* ── "BEST VALUE" floating badge ── */
+.highlightBadge {
+  /* floats above the card — parent must NOT have overflow:hidden */
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #e8cc3f, #f5de6a);
+  color: #06111e;
+  padding: 0.32rem 1.1rem;
+  border-radius: 99px;
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(232,204,63,0.4);
+  z-index: 2;
 }
 
 /* ── Card header ── */
 .cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin-bottom: 1rem;
 }
 
-.highlighted {
-  border-color: rgba(224, 199, 58, 0.45);
-  background: rgba(224, 199, 58, 0.06);
-  box-shadow: 0 0 0 1px rgba(224, 199, 58, 0.15), 0 16px 48px rgba(0, 0, 0, 0.4);
-}
-
-.highlighted:hover {
-  border-color: rgba(224, 199, 58, 0.65);
-  box-shadow: 0 0 0 1px rgba(224, 199, 58, 0.3), 0 24px 64px rgba(224, 199, 58, 0.15);
-}
-
-.highlightBadge {
-  position: absolute;
-  top: -13px;
-  left: 1.5rem;
-  background: #e0c73a;
-  color: #07101f;
-  padding: 0.3rem 0.85rem;
-  border-radius: 99px;
-  font-weight: 800;
-  font-size: 0.7rem;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-}
-
-/* ── Plan emoji ── */
 .planEmoji {
-  font-size: 2.2rem;
+  font-size: 2rem;
   line-height: 1;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .planName {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  color: #f0f4ff;
+  color: #eef2ff;
   letter-spacing: -0.3px;
   margin: 0;
 }
 
-/* Free Trial pill badge (non-highlighted cards) */
+/* "Free Trial" side-badge on non-highlighted cards */
 .sideBadge {
   display: inline-block;
-  margin-top: 0.4rem;
-  padding: 0.2rem 0.6rem;
-  background: rgba(34, 197, 94, 0.12);
+  margin-top: 0.3rem;
+  padding: 0.18rem 0.55rem;
+  background: rgba(34, 197, 94, 0.1);
   border: 1px solid rgba(34, 197, 94, 0.28);
   border-radius: 99px;
   color: #86efac;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  width: fit-content;
 }
 
 .promotionBadge {
@@ -164,31 +200,204 @@
   font-weight: 500;
 }
 
+/* ── Description ── */
 .description {
   font-size: 0.875rem;
-  color: #9baec8;
-  line-height: 1.65;
-  margin: 0.75rem 0 1.25rem;
-  flex-grow: 0;
+  color: #8fa8c8;
+  line-height: 1.7;
+  margin: 0 0 1.25rem;
 }
 
-/* ── Specs separator ── */
+/* ── Price block ── */
+.priceSection {
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.amount {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #eef2ff;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.period {
+  font-size: 1rem;
+  color: #8fa8c8;
+  font-weight: 500;
+  align-self: flex-end;
+  padding-bottom: 3px;
+}
+
+.trialNote {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+  text-align: center;
+}
+
+.currencySmall {
+  font-size: 1.1rem;
+  color: #8fa8c8;
+  font-weight: 500;
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+/* ── CTA button ── */
+.buyButton {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #eef2ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.3px;
+}
+
+.buyButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.buyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Highlighted plan CTA — gold */
+.buyButtonHighlighted {
+  background: linear-gradient(135deg, #e8cc3f 0%, #f5de6a 50%, #e8cc3f 100%);
+  background-size: 200% auto;
+  border: none;
+  color: #06111e;
+  font-weight: 800;
+  box-shadow: 0 0 28px rgba(232,204,63,0.32);
+  transition: background-position 0.4s ease, box-shadow 0.25s ease;
+}
+
+.buyButtonHighlighted:hover:not(:disabled) {
+  background-position: right center;
+  box-shadow: 0 0 48px rgba(232,204,63,0.52);
+}
+
+/* Discord plan CTA — indigo */
+.buyButtonSubscribe {
+  background: rgba(88, 101, 242, 0.12);
+  border-color: rgba(88, 101, 242, 0.35);
+  color: #a5b4fc;
+}
+
+.buyButtonSubscribe:hover:not(:disabled) {
+  background: rgba(88, 101, 242, 0.22);
+  border-color: rgba(88, 101, 242, 0.55);
+  box-shadow: 0 6px 24px rgba(88, 101, 242, 0.28);
+}
+
+/* Small note below CTA */
+.paymentNote {
+  text-align: center;
+  font-size: 0.73rem;
+  color: #4a5e7a;
+  margin: 0 0 0.5rem;
+}
+
+/* ── Features toggle ── */
+.featuresToggle {
+  width: 100%;
+  padding: 0.6rem 0;
+  border: none;
+  background: none;
+  color: #8fa8c8;
+  font-weight: 600;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.2s;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 0.75rem;
+}
+
+.featuresToggle:hover { color: #eef2ff; }
+
+.toggleIcon {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #8fa8c8;
+  line-height: 1;
+}
+
+/* ── Features list ── */
+.featuresList {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  animation: _price_slideDown 0.22s ease;
+}
+
+@keyframes _price_slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.featureItem {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.83rem;
+  color: #8fa8c8;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.featureBullet {
+  color: #e8cc3f;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 0.75rem;
+}
+
+/* ── Misc reused classes ── */
 .specs {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  padding: 1.1rem 0;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 1rem 0;
   margin-bottom: 1.25rem;
 }
 
-.spec {
-  flex: 1;
-}
+.spec { flex: 1; }
 
 .label {
   display: block;
   font-size: 0.68rem;
   font-weight: 700;
-  color: #5a6a85;
+  color: #4a5e7a;
   letter-spacing: 0.7px;
   margin-bottom: 0.4rem;
   text-transform: uppercase;
@@ -203,231 +412,49 @@
 .number {
   font-size: 1.3rem;
   font-weight: 800;
-  color: #f0f4ff;
+  color: #eef2ff;
 }
 
-/* ── Pricing ── */
-.priceSection {
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
-}
-
-.price {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
-}
-
-.amount {
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: #f0f4ff;
-  letter-spacing: -1.5px;
-  line-height: 1;
-}
-
-.period {
-  font-size: 1rem;
-  color: #9baec8;
-  font-weight: 500;
-  align-self: flex-end;
-  padding-bottom: 4px;
-}
-
-/* "First 7 days FREE" note */
-.trialNote {
-  margin: 0.6rem 0 0;
-  font-size: 0.83rem;
-  font-weight: 700;
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.09);
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  border-radius: 8px;
-  padding: 0.45rem 0.75rem;
-  text-align: center;
-}
-
-.currencySmall {
-  font-size: 1rem;
-  color: #9baec8;
-  font-weight: 500;
-}
-
-/* ── CTA buttons ── */
-.buyButton {
-  width: 100%;
-  padding: 0.9rem 1.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f0f4ff;
-  font-weight: 700;
-  font-size: 0.9rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.3px;
-}
-
-.buyButton:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
-
-.buyButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.buyButtonHighlighted {
-  background: #e0c73a;
-  border-color: #e0c73a;
-  color: #07101f;
-}
-
-.buyButtonHighlighted:hover:not(:disabled) {
-  background: #f0d84a;
-  border-color: #f0d84a;
-  box-shadow: 0 6px 22px rgba(224, 199, 58, 0.4);
-}
-
-/* Discord subscription CTA — indigo / discord teal */
-.buyButtonSubscribe {
-  background: rgba(88, 101, 242, 0.15);
-  border-color: rgba(88, 101, 242, 0.4);
-  color: #a5b4fc;
-}
-
-.buyButtonSubscribe:hover:not(:disabled) {
-  background: rgba(88, 101, 242, 0.28);
-  border-color: rgba(88, 101, 242, 0.6);
-  box-shadow: 0 6px 22px rgba(88, 101, 242, 0.3);
-  transform: translateY(-1px);
-}
-
-/* Small note below CTA */
-.paymentNote {
-  text-align: center;
-  font-size: 0.75rem;
-  color: #5a6a85;
-  margin: 0 0 0.5rem;
-}
-
-/* ── Features toggle ── */
-.featuresToggle {
-  width: 100%;
-  padding: 0.6rem 0;
-  border: none;
-  background: none;
-  color: #9baec8;
-  font-weight: 600;
-  font-size: 0.83rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: color 0.2s;
-}
-
-.featuresToggle:hover {
-  color: #f0f4ff;
-}
-
-.toggleIcon {
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: #9baec8;
-}
-
-/* ── Features list ── */
-.featuresList {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  animation: _price_slideDown 0.25s ease;
-}
-
-@keyframes _price_slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.featureItem {
-  display: flex;
-  gap: 0.65rem;
-  margin-bottom: 0.65rem;
-  font-size: 0.83rem;
-  color: #9baec8;
-  align-items: flex-start;
-  line-height: 1.5;
-}
-
-.featureBullet {
-  color: #e0c73a;
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-/* ── Bottom security note ── */
+/* ── Security note ── */
 .secureNote {
   text-align: center;
   margin-top: 2.5rem;
-  color: #5a6a85;
-  font-size: 0.8rem;
+  color: #4a5e7a;
+  font-size: 0.78rem;
 }
 
-/* featuresList works as ul */
-.featuresList {
-  list-style: none;
-  margin: 1rem 0 0;
-  padding: 1rem 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  animation: _price_slideDown 0.25s ease;
-}
-
-/* ── Responsive ── */
+/* ═══════════════════════════
+   RESPONSIVE
+   ═══════════════════════════ */
 @media (max-width: 768px) {
-  .mainContent {
-    padding-top: 76px;
-  }
-
-  .content {
-    padding: 2rem 1rem;
-  }
-
-  .pricingGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .title {
-    letter-spacing: -1px;
-  }
+  .mainContent { padding-top: 72px; }
+  .content { padding: 2rem 1rem; }
+  .pricingGrid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .title { letter-spacing: -1px; }
+  .header { margin-bottom: 2.5rem; }
 }
 
 @media (max-width: 480px) {
-  .mainContent {
-    padding-top: 68px;
-  }
-
-  .content {
-    padding: 1.5rem 0.875rem;
-  }
+  .mainContent { padding-top: 60px; }
+  .content { padding: 1.5rem 0.875rem; }
 
   .card {
-    padding: 1.5rem;
-    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    padding-top: 2rem;
+    border-radius: 18px;
   }
 
-  .amount {
-    font-size: 2rem;
+  .highlighted { padding-top: 2.25rem; }
+
+  .amount { font-size: 2.2rem; }
+  .planName { font-size: 1.1rem; }
+}
+
+/* ── Mobile perf: kill expensive blur ── */
+@media (max-width: 860px) {
+  .card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(6, 14, 34, 0.94) !important;
   }
 }

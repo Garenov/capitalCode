@@ -54,7 +54,7 @@ export default function Home() {
   const [reviews, setReviews] = React.useState(fallbackReviews);
   const [lightboxSrc, setLightboxSrc] = React.useState(null);
 
-  // Responsive reviews per page — debounced to avoid spam on resize/orientation-change
+  // Responsive reviews per page
   const [reviewsPerPage, setReviewsPerPage] = React.useState(3);
   React.useEffect(() => {
     let timer;
@@ -69,8 +69,7 @@ export default function Home() {
     return () => { window.removeEventListener("resize", update); clearTimeout(timer); };
   }, []);
 
-  // Lazy-load PDF iframe — avoids blocking the main thread on mobile before the
-  // user has even scrolled to the book section.
+  // Lazy-load PDF iframe
   const pdfRef = React.useRef(null);
   const [pdfVisible, setPdfVisible] = React.useState(false);
   React.useEffect(() => {
@@ -103,19 +102,52 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Slice reviews for the current page
-  const visibleReviews = reviews.slice(
-    reviewCarousel.index * reviewsPerPage,
-    reviewCarousel.index * reviewsPerPage + reviewsPerPage
-  );
-
-  const currentShot = discordScreenshots[discordCarousel.index];
-
   return (
     <div className={styles.page}>
       <Header />
 
       <main className={styles.main}>
+
+        {/* ─── HERO ─── */}
+        <section className={styles.heroSection}>
+          <div className={styles.heroBadge}>
+            <span className={styles.heroBadgeDot} />
+            New Edition Available
+          </div>
+
+          <h1 className={styles.heroTitle}>
+            The Capital Code
+          </h1>
+
+          <p className={styles.heroSub}>
+            A disciplined guide to financial strategy, investing, and long-term value creation.
+            Theory meets practice — no noise, just signal.
+          </p>
+
+          <div className={styles.heroActions}>
+            <button className={styles.heroCta} onClick={() => router.push("/pricing")}>
+              Get Your Copy →
+            </button>
+            <button className={styles.heroSecondary} onClick={() => router.push("/qna")}>
+              Learn More
+            </button>
+          </div>
+
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>1,200+</span>
+              <span className={styles.heroStatLabel}>Readers</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>4.9★</span>
+              <span className={styles.heroStatLabel}>Rating</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>3 Editions</span>
+              <span className={styles.heroStatLabel}>Available</span>
+            </div>
+          </div>
+        </section>
 
         {/* ─── Main Blocks ─── */}
         <div className={styles.mainBox}>
@@ -125,16 +157,15 @@ export default function Home() {
             <h5>After years immersed in economics, investing, and financial analysis, I've witnessed both the allure of quick profits and clarity that comes from genuine financial insight. My mission is to bridge theory and practice — building tools that empower people to make decisions grounded in logic, not noise.</h5>
             <h5>Through experience in financial consulting and startup management, I've learned that clarity and structure outweigh vanity. That's what The Capital Code stands for — disciplined thinking and long-term value creation.</h5>
 
-            <Link href="/buy">        </Link>
             <button className={styles.buyButton} onClick={() => router.push("/pricing")}>
-              <span className={styles.buyButtonText}>Buy Now</span>
+              <span className={styles.buyButtonText}>Buy Now — From 299 Kč</span>
             </button>
           </div>
 
           <div className={styles.bookDescription}>
-            <h3>Book Description</h3>
+            <h3>Book Preview</h3>
             <div className={styles.bookContent}>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>The Capital Code synthesizes years of first-hand financial experience into a structured, actionable framework. From understanding market cycles to building a personal investment thesis, each chapter delivers concrete tools for disciplined decision-making.</p>
               <div className={styles.pdfContainer} ref={pdfRef}>
                 <div className={styles.bookClassic}>
                   {pdfVisible ? (
@@ -146,7 +177,7 @@ export default function Home() {
                     />
                   ) : (
                     <div className={styles.pdfPlaceholder}>
-                      <span>📖 Scroll to load preview</span>
+                      <span>📖 Loading preview…</span>
                     </div>
                   )}
                 </div>
@@ -164,22 +195,17 @@ export default function Home() {
             onTouchStart={reviewCarousel.onTouchStart}
             onTouchEnd={reviewCarousel.onTouchEnd}
           >
-            {/* Prev arrow */}
             <button
               className={`${styles.carouselArrow} ${styles.carouselArrowLeft}`}
               onClick={reviewCarousel.prev}
               aria-label="Previous reviews"
-            >
-              ‹
-            </button>
+            >‹</button>
 
-            {/* Slide viewport */}
             <div className={styles.carouselViewport}>
               <div
                 className={styles.carouselTrack}
                 style={{ transform: `translateX(-${reviewCarousel.index * 100}%)` }}
               >
-                {/* render all pages, each page is a flex row of cards */}
                 {Array.from({ length: reviewCarousel.pageCount }).map((_, pageIdx) => (
                   <div className={styles.carouselPage} key={pageIdx}>
                     {reviews
@@ -196,17 +222,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Next arrow */}
             <button
               className={`${styles.carouselArrow} ${styles.carouselArrowRight}`}
               onClick={reviewCarousel.next}
               aria-label="Next reviews"
-            >
-              ›
-            </button>
+            >›</button>
           </div>
 
-          {/* Dots */}
           <div className={styles.carouselDots}>
             {Array.from({ length: reviewCarousel.pageCount }).map((_, i) => (
               <button
@@ -228,16 +250,12 @@ export default function Home() {
             onTouchStart={discordCarousel.onTouchStart}
             onTouchEnd={discordCarousel.onTouchEnd}
           >
-            {/* Prev */}
             <button
               className={`${styles.carouselArrow} ${styles.carouselArrowLeft}`}
               onClick={discordCarousel.prev}
               aria-label="Previous screenshot"
-            >
-              ‹
-            </button>
+            >‹</button>
 
-            {/* Slides */}
             <div className={styles.carouselViewport}>
               <div
                 className={styles.carouselTrack}
@@ -268,17 +286,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Next */}
             <button
               className={`${styles.carouselArrow} ${styles.carouselArrowRight}`}
               onClick={discordCarousel.next}
               aria-label="Next screenshot"
-            >
-              ›
-            </button>
+            >›</button>
           </div>
 
-          {/* Dots */}
           <div className={styles.carouselDots}>
             {discordScreenshots.map((_, i) => (
               <button

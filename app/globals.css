@@ -1,53 +1,74 @@
 /* ═══════════════════════════════════════════
-   CAPITAL CODE — GLOBAL DESIGN SYSTEM 2025
+   CAPITAL CODE — DESIGN SYSTEM 2026
    ═══════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  /* Brand */
-  --gold:        #e0c73a;
-  --gold-dim:    #c8b033;
-  --gold-glow:   rgba(224, 199, 58, 0.18);
+  /* ── Brand palette ── */
+  --gold:          #e8cc3f;
+  --gold-bright:   #f5de6a;
+  --gold-dim:      #b89e28;
+  --gold-glow:     rgba(232, 204, 63, 0.22);
+  --gold-glow-lg:  rgba(232, 204, 63, 0.12);
 
-  /* Background layers */
-  --bg-base:     #07101f;
-  --bg-surface:  rgba(255, 255, 255, 0.045);
-  --bg-raised:   rgba(255, 255, 255, 0.075);
-  --bg-hover:    rgba(255, 255, 255, 0.10);
+  /* ── Accent colors ── */
+  --cyan:          #00d4ff;
+  --cyan-glow:     rgba(0, 212, 255, 0.15);
+  --violet:        #7c3aed;
+  --violet-glow:   rgba(124, 58, 237, 0.18);
+  --rose:          #f43f5e;
 
-  /* Borders */
-  --border:      rgba(255, 255, 255, 0.09);
-  --border-md:   rgba(255, 255, 255, 0.14);
-  --border-gold: rgba(224, 199, 58, 0.32);
+  /* ── Background layers ── */
+  --bg-base:       #030812;
+  --bg-deep:       #050d1a;
+  --bg-surface:    rgba(255, 255, 255, 0.035);
+  --bg-raised:     rgba(255, 255, 255, 0.06);
+  --bg-hover:      rgba(255, 255, 255, 0.09);
+  --bg-glass:      rgba(8, 16, 36, 0.72);
 
-  /* Text */
-  --text-primary:   #f0f4ff;
-  --text-secondary: #9baec8;
-  --text-muted:     #5a6a85;
+  /* ── Borders ── */
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-md:     rgba(255, 255, 255, 0.12);
+  --border-bright: rgba(255, 255, 255, 0.22);
+  --border-gold:   rgba(232, 204, 63, 0.35);
+  --border-cyan:   rgba(0, 212, 255, 0.25);
 
-  /* Status */
+  /* ── Text ── */
+  --text-primary:   #eef2ff;
+  --text-secondary: #8fa8c8;
+  --text-muted:     #4a5e7a;
+
+  /* ── Status ── */
   --green:  #22c55e;
   --red:    #ef4444;
   --yellow: #eab308;
 
-  /* Radius */
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 18px;
-  --r-xl: 24px;
+  /* ── Radius ── */
+  --r-sm:  8px;
+  --r-md:  14px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-2xl: 36px;
 
-  /* Shadow */
-  --shadow-sm: 0 2px 12px rgba(0,0,0,0.35);
-  --shadow-md: 0 8px 32px rgba(0,0,0,0.45);
-  --shadow-lg: 0 16px 56px rgba(0,0,0,0.55);
+  /* ── Shadows ── */
+  --shadow-sm:   0 2px 12px rgba(0,0,0,0.5);
+  --shadow-md:   0 8px 40px rgba(0,0,0,0.6);
+  --shadow-lg:   0 20px 80px rgba(0,0,0,0.7);
+  --shadow-gold: 0 0 40px rgba(232, 204, 63, 0.25);
+  --shadow-cyan: 0 0 40px rgba(0, 212, 255, 0.2);
 
-  /* Transitions */
-  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ── Transitions ── */
+  --transition:      0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  --spring:          0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Legacy compat */
-  --primary-bg:   #07101f;
-  --accent-yellow: #e0c73a;
+  /* ── Legacy compat ── */
+  --primary-bg:    #030812;
+  --accent-yellow: #e8cc3f;
 }
 
+/* ═══ BASE ═══ */
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
@@ -56,7 +77,6 @@ html {
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
-  height: 100%;
 }
 
 * {
@@ -68,10 +88,10 @@ html, body {
 body {
   color: var(--text-primary);
   background: var(--bg-base);
-  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 img {
@@ -83,12 +103,10 @@ img {
 button {
   font-family: inherit;
   font-size: inherit;
-  /* Eliminate 300ms tap delay and blue flash on mobile */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
-/* Remove default focus ring on click; keep for keyboard nav */
 button:focus:not(:focus-visible),
 a:focus:not(:focus-visible),
 input:focus:not(:focus-visible),
@@ -105,25 +123,22 @@ a {
   touch-action: manipulation;
 }
 
-/* ── Shared glass card (DESKTOP) ── */
+/* ═══ SHARED GLASS ═══ */
 .glass-card {
-  background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
+  background: var(--bg-glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border-md);
   border-radius: var(--r-lg);
 }
 
-/* ── Focus ring (keyboard only) ── */
+/* ═══ FOCUS RING (keyboard only) ═══ */
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
 
-/* ── GPU compositing — DESKTOP only ──
-   will-change is expensive on mobile (forces layer creation for every matched
-   element). We scope it to desktop only where GPU memory is plentiful.
-   On mobile we rely on explicit animation/transition triggers instead.       */
+/* ═══ GPU COMPOSITING (desktop) ═══ */
 @media (min-width: 861px) {
   [class*="card"],
   [class*="Button"],
@@ -131,35 +146,22 @@ a {
   [class*="Wrap"],
   [class*="Track"] {
     will-change: transform;
-    transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
 }
 
-/* ── Mobile: disable expensive blur + simplify glass ──
-   backdrop-filter forces a compositing layer + GPU texture read on every
-   frame. On low-end mobile chips this is the #1 jank source.              */
+/* ═══ MOBILE PERF ═══ */
 @media (max-width: 860px) {
   .glass-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(10, 22, 44, 0.92) !important;
+    background: rgba(6, 14, 32, 0.95) !important;
   }
-
-  /* Disable smooth scroll on mobile — iOS scrolls own momentum already */
-  html {
-    scroll-behavior: auto;
-  }
-
-  /* Reduce animation durations by 40% on mobile to feel snappier */
-  * {
-    animation-duration: 60% !important;
-    transition-duration: 60% !important;
-  }
+  html { scroll-behavior: auto; }
 }
 
-/* ── Reduced motion: honor system preference ── */
+/* ═══ REDUCED MOTION ═══ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -169,22 +171,29 @@ a {
   }
 }
 
-/* ── Content visibility (deferred paint for below-fold sections) ── */
+/* ═══ CONTENT VISIBILITY ═══ */
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: 0 500px;
 }
 
-/* ── Scrollbar (desktop only — mobile has native scrollbar) ── */
+/* ═══ SCROLLBAR ═══ */
 @media (min-width: 861px) {
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.15);
+    background: linear-gradient(180deg, var(--gold-dim), var(--violet));
     border-radius: 99px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 }
 
-/* ── Selection ── */
+/* ═══ SELECTION ═══ */
 ::selection { background: var(--gold-glow); color: #fff; }
+
+/* ═══ GRADIENT TEXT UTILITY ═══ */
+.grad-text {
+  background: linear-gradient(135deg, #fff 0%, var(--gold-bright) 50%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

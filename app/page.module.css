@@ -1,139 +1,351 @@
+/* ═══════════════════════════════════════════════
+   CAPITAL CODE — HOME PAGE  2026
+   ════════════════════════════════════════════════ */
+
+/* ══ PAGE SHELL ══════════════════════════════════ */
 .page {
-  background: radial-gradient(ellipse 100% 70% at 50% -5%, #142b58 0%, #07101f 60%);
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: inherit;
+  overflow: hidden;
+  background: #030812;
 }
 
+/* ── Animated aurora mesh behind everything ── */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(124,58,237,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(0,212,255,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 80% at 50% 40%, rgba(232,204,63,0.06) 0%, transparent 60%),
+    #030812;
+  animation: auroraShift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes auroraShift {
+  0%   { opacity: 1; filter: hue-rotate(0deg); }
+  50%  { opacity: 0.85; filter: hue-rotate(15deg); }
+  100% { opacity: 1; filter: hue-rotate(-10deg); }
+}
+
+/* ── Floating orbs ── */
+.page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 300px at 15% 70%, rgba(232,204,63,0.06) 0%, transparent 70%),
+    radial-gradient(circle 200px at 85% 20%, rgba(0,212,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ══ MAIN CONTENT ═════════════════════════════════ */
 .main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 5.5rem 1.5rem 3rem;
+  padding: 7rem 1.5rem 4rem;
   width: 100%;
   box-sizing: border-box;
-  gap: 3rem;
+  gap: 5rem;
 }
 
-.mainBox {
-  display: flex;
-  gap: 4rem;
+/* ══ HERO SECTION ═════════════════════════════════ */
+.heroSection {
   width: 100%;
   max-width: 1400px;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
 }
 
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(232, 204, 63, 0.08);
+  border: 1px solid rgba(232, 204, 63, 0.25);
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--gold-bright, #f5de6a);
+  backdrop-filter: blur(8px);
+}
+
+.heroBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-bright, #f5de6a);
+  box-shadow: 0 0 8px var(--gold-bright, #f5de6a);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.heroTitle {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -3px;
+  background: linear-gradient(135deg, #ffffff 0%, #f5de6a 45%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.heroSub {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-secondary, #8fa8c8);
+  max-width: 560px;
+  line-height: 1.75;
+}
+
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.heroCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(135deg, #e8cc3f 0%, #f5de6a 50%, #e8cc3f 100%);
+  background-size: 200% auto;
+  color: #06111e;
+  font-weight: 800;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--r-xl, 28px);
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background-position 0.4s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 30px rgba(232,204,63,0.4), 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.heroCta:hover {
+  background-position: right center;
+  box-shadow: 0 0 50px rgba(232,204,63,0.6), 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.heroSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.2rem;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--r-xl, 28px);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.heroSecondary:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.heroStats {
+  display: flex;
+  gap: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 0.5rem;
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.heroStatNum {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gold-bright, #f5de6a);
+  letter-spacing: -1px;
+}
+
+.heroStatLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted, #4a5e7a);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+/* ══ MAIN CONTENT BOXES ═══════════════════════════ */
+.mainBox {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  align-items: stretch;
+}
+
+/* ── 3D glass card ── */
 .projectDescription {
-  flex: 0 1 45%;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f0f0f0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  height: fit-content;
-  will-change: transform;
-  transform: translateZ(0);
+  flex: 0 1 44%;
+  padding: 2.75rem;
+  position: relative;
+  background: rgba(8, 16, 36, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-radius: var(--r-xl, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--text-primary);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 80px rgba(124,58,237,0.08);
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* Chromatic top-edge glow */
+.projectDescription::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,204,63,0.6), rgba(0,212,255,0.4), transparent);
 }
 
 .projectDescription:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+  border-color: rgba(232,204,63,0.18);
+  box-shadow:
+    0 0 0 1px rgba(232,204,63,0.08) inset,
+    0 24px 80px rgba(0,0,0,0.6),
+    0 0 100px rgba(232,204,63,0.1);
 }
 
 .projectDescription h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 1.65rem;
+  font-weight: 800;
   margin: 0 0 1.5rem 0;
-  background: linear-gradient(135deg, #fff 0%, #e0c73a 100%);
+  background: linear-gradient(135deg, #fff 30%, #f5de6a 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
 }
 
 .projectDescription h5 {
   font-size: 0.95rem;
   font-weight: 400;
-  margin: 0 0 1.2rem 0;
-  padding: 0;
-  line-height: 1.7;
-  color: #d0d0d0;
-  opacity: 0.9;
+  margin: 0 0 1rem 0;
+  line-height: 1.8;
+  color: var(--text-secondary, #8fa8c8);
 }
 
 .projectDescription h5:last-of-type {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
+/* ── CTA button (inside card) ── */
 .buyButton {
   width: 100%;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #e0c73a 0%, #f0d750 100%);
-  color: #0a1428;
+  background: linear-gradient(135deg, #e8cc3f 0%, #f5de6a 50%, #e8cc3f 100%);
+  background-size: 200% auto;
+  color: #06111e;
   border: none;
-  border-radius: 10px;
-  font-size: 1.05rem;
-  font-weight: 700;
+  border-radius: var(--r-lg, 20px);
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(224, 199, 58, 0.3);
+  letter-spacing: 0.3px;
   text-transform: uppercase;
+  transition: background-position 0.4s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 28px rgba(232,204,63,0.35), 0 4px 16px rgba(0,0,0,0.3);
 }
 
 .buyButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(224, 199, 58, 0.5);
-  background: linear-gradient(135deg, #f0d750 0%, #e0c73a 100%);
+  background-position: right center;
+  box-shadow: 0 0 50px rgba(232,204,63,0.55), 0 8px 28px rgba(0,0,0,0.4);
 }
 
 .buyButton:active {
-  transform: translateY(0);
+  box-shadow: 0 0 20px rgba(232,204,63,0.3);
 }
 
-.buyButtonText {
-  display: block;
-}
+.buyButtonText { display: block; }
 
+/* ── Book description card ── */
 .bookDescription {
   flex: 1;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f0f0f0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  height: 600px;
-  overflow-y: auto;
+  padding: 2.75rem;
+  position: relative;
+  background: rgba(8, 16, 36, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-radius: var(--r-xl, 28px);
+  border: 1px solid rgba(0,212,255,0.1);
+  color: var(--text-primary);
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,0.04) inset,
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 80px rgba(0,212,255,0.06);
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  height: 580px;
   display: flex;
   flex-direction: column;
-  will-change: transform;
-  transform: translateZ(0);
+}
+
+/* Cyan top-edge glow */
+.bookDescription::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), rgba(124,58,237,0.4), transparent);
 }
 
 .bookDescription:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0,212,255,0.2);
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,0.07) inset,
+    0 24px 80px rgba(0,0,0,0.6),
+    0 0 100px rgba(0,212,255,0.08);
 }
 
 .bookDescription h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 1.65rem;
+  font-weight: 800;
   margin: 0 0 1.5rem 0;
-  background: linear-gradient(135deg, #fff 0%, #e0c73a 100%);
+  background: linear-gradient(135deg, #fff 30%, #00d4ff 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
   text-align: center;
 }
@@ -143,14 +355,14 @@
   flex-direction: row;
   gap: 1.5rem;
   flex: 1;
+  overflow: hidden;
 }
 
 .bookContent p {
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: #d0d0d0;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: var(--text-secondary, #8fa8c8);
   margin: 0;
-  opacity: 0.9;
   flex: 0 1 40%;
 }
 
@@ -159,173 +371,160 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  perspective: 1000px;
   flex: 1;
 }
 
 .bookClassic {
   width: 100%;
-  background: linear-gradient(135deg, #f9f8f3 0%, #fafaf8 100%);
-  border-radius: 8px;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset -2px 0 4px rgba(0, 0, 0, 0.1),
-    inset 2px 0 4px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--r-md, 14px);
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
 .pdfViewer {
   width: 100%;
-  height: 400px;
+  height: 100%;
+  min-height: 340px;
   border: none;
   display: block;
 }
 
 .pdfPlaceholder {
   width: 100%;
-  height: 400px;
+  height: 100%;
+  min-height: 340px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9baec8;
-  font-size: 0.9rem;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
+  color: var(--text-muted, #4a5e7a);
+  font-size: 0.88rem;
+  gap: 0.5rem;
 }
 
-/* ─── Section Titles ─── */
+/* ══ SECTION TITLES ═══════════════════════════════ */
 .sectionTitle {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  background: linear-gradient(135deg, #fff 0%, #e0c73a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.8px;
   text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #fff 0%, #f5de6a 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* ─── Shared Carousel ─── */
-
-/* Sections wrap the carousel + dots */
-.reviewsSection,
-.discordSection {
+/* ══ REVIEWS SECTION ══════════════════════════════ */
+.reviewsSection {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
 }
 
-/* Outer wrapper: holds arrows + viewport side by side */
+/* ── CAROUSEL ── */
 .carouselWrapper {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: 100%;
 }
 
-/* Clips sliding content */
 .carouselViewport {
-  flex: 1;
   overflow: hidden;
-  border-radius: 18px;
-  min-width: 0;
+  border-radius: var(--r-lg, 20px);
+  flex: 1;
 }
 
-/* Flex row of all pages — moves via translateX */
 .carouselTrack {
   display: flex;
   transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
 }
 
-/* One "page" — full viewport width, displays as flex row of cards */
 .carouselPage {
-  flex: 0 0 100%;
-  width: 100%;
+  min-width: 100%;
   display: flex;
   gap: 1.25rem;
-  align-items: stretch;
-  box-sizing: border-box;
-  padding: 0 0.25rem;
+  padding: 0.25rem;
 }
 
-/* Review card inside a carousel page */
+.carouselArrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  backdrop-filter: blur(12px);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.carouselArrow:hover {
+  background: rgba(232,204,63,0.12);
+  border-color: rgba(232,204,63,0.3);
+  box-shadow: 0 0 20px rgba(232,204,63,0.2);
+}
+
+/* ── Review card ── */
 .reviewCard {
   flex: 1;
-  min-width: 0;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  padding: 1.75rem;
+  background: rgba(8, 16, 36, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--r-lg, 20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  gap: 0.85rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer line on top */
+.reviewCard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,204,63,0.4), transparent);
 }
 
 .reviewCard:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(224, 199, 58, 0.4);
-  box-shadow: 0 6px 28px rgba(224, 199, 58, 0.15);
+  border-color: rgba(232,204,63,0.2);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(232,204,63,0.07);
 }
 
 .reviewStars {
-  font-size: 1.1rem;
-  color: #e0c73a;
+  font-size: 1rem;
+  color: var(--gold, #e8cc3f);
   letter-spacing: 2px;
 }
 
 .reviewText {
   font-size: 0.9rem;
-  line-height: 1.65;
-  color: #d0d0d0;
+  line-height: 1.7;
+  color: var(--text-secondary, #8fa8c8);
   margin: 0;
   flex: 1;
-  font-style: italic;
 }
 
 .reviewAuthor {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: #e0c73a;
+  color: var(--gold-bright, #f5de6a);
 }
 
-/* Prev / Next arrow buttons */
-.carouselArrow {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  color: #f0f4ff;
-  font-size: 1.75rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.carouselArrow:hover {
-  background: rgba(224, 199, 58, 0.15);
-  border-color: rgba(224, 199, 58, 0.4);
-  box-shadow: 0 0 16px rgba(224, 199, 58, 0.18);
-  transform: scale(1.08);
-}
-
-.carouselArrow:active { transform: scale(0.96); }
-
-/* Dot indicators */
+/* Carousel dots */
 .carouselDots {
   display: flex;
   justify-content: center;
@@ -337,94 +536,96 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  background: rgba(255,255,255,0.15);
   border: none;
-  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   padding: 0;
-  transition: background 0.25s, transform 0.25s, width 0.25s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .dotActive {
-  background: #e0c73a;
-  width: 22px;
-  border-radius: 4px;
-  transform: scaleY(1.1);
+  background: var(--gold, #e8cc3f);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(232,204,63,0.5);
 }
 
-/* ─── Discord image wrap inside carousel ─── */
+/* ══ DISCORD SECTION ══════════════════════════════ */
+.discordSection {
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Discord image wrap */
 .discordImageWrap {
   position: relative;
-  width: 100%;
-  border-radius: 16px;
+  border-radius: var(--r-xl, 28px);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 40px rgba(88, 101, 242, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: box-shadow 0.25s, border-color 0.25s;
+  border: 1px solid rgba(114,137,218,0.2);
+  box-shadow:
+    0 12px 60px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 0 80px rgba(114,137,218,0.1);
+  cursor: zoom-in;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .discordImageWrap:hover {
-  box-shadow: 0 12px 50px rgba(88, 101, 242, 0.35), 0 6px 28px rgba(0, 0, 0, 0.4);
-  border-color: rgba(88, 101, 242, 0.4);
+  border-color: rgba(114,137,218,0.45);
+  box-shadow:
+    0 20px 80px rgba(0,0,0,0.6),
+    0 0 100px rgba(114,137,218,0.18);
 }
 
 .discordImage {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: var(--r-xl, 28px);
 }
 
 .discordZoom {
   position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  color: #f0f4ff;
-  font-size: 0.75rem;
-  padding: 0.3rem 0.65rem;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 99px;
+  font-size: 0.73rem;
+  color: rgba(255,255,255,0.75);
+  cursor: zoom-in;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
 }
 
-.discordImageWrap:hover .discordZoom {
-  opacity: 1;
-}
-
-/* ─── Lightbox ─── */
+/* ══ LIGHTBOX ═════════════════════════════════════ */
 .lightboxOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
   z-index: 3000;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  animation: fadeInLightbox 0.25s ease;
+  cursor: zoom-out;
+  animation: fadeInLightbox 0.2s ease;
 }
 
 @keyframes fadeInLightbox {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .lightboxClose {
   position: fixed;
   top: 1.5rem;
   right: 1.5rem;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
   color: #fff;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -432,383 +633,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: background 0.2s, transform 0.3s;
   z-index: 3001;
 }
 
 .lightboxClose:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.18);
   transform: rotate(90deg);
 }
 
 .lightboxImage {
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 92vw;
+  max-height: 92vh;
   width: auto !important;
   height: auto !important;
   object-fit: contain;
-  border-radius: 12px;
-  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.5);
+  border-radius: var(--r-lg, 20px);
+  box-shadow: 0 0 100px rgba(0,0,0,0.8), 0 0 40px rgba(0,212,255,0.1);
   cursor: default;
-  animation: lightboxScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: lightboxScale 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
 
 @keyframes lightboxScale {
-  from { transform: scale(0.85); opacity: 0; }
+  from { transform: scale(0.88); opacity: 0; }
   to   { transform: scale(1);    opacity: 1; }
 }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-   ═══════════════════════════════════════════════ */
-
-/* Desktop Optimization (1025px+) */
+/* ══ RESPONSIVE ═══════════════════════════════════ */
 @media (min-width: 1025px) {
-  .main {
-    padding: 7rem 3rem 4rem;
-    gap: 4rem;
-  }
-
-  .mainBox {
-    gap: 5rem;
-  }
-
-  .projectDescription {
-    flex: 0 1 40%;
-    padding: 3rem;
-  }
-
-  .projectDescription h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .projectDescription h5 {
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .bookDescription {
-    flex: 1 1 50%;
-    padding: 3rem;
-    height: 650px;
-  }
-
-  .bookDescription h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .bookContent p {
-    font-size: 1rem;
-  }
-
-  .bookContent img {
-    max-width: 320px;
-  }
-
-  .buyButton {
-    padding: 1.2rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .reviewCard {
-    width: 360px;
-  }
+  .main { padding: 8rem 3rem 5rem; gap: 6rem; }
+  .mainBox { gap: 2.5rem; }
 }
 
-/* Tablet (768px - 1024px) */
 @media (max-width: 1024px) {
-  .main {
-    padding: 6rem 1.5rem 2rem;
-    gap: 2.5rem;
-  }
-
   .mainBox {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.75rem;
   }
-
-  .projectDescription {
-    flex: 1;
-    width: 100%;
-    padding: 2rem;
-  }
-
-  .projectDescription h3 {
-    font-size: 1.6rem;
-  }
-
-  .projectDescription h5 {
-    font-size: 0.9rem;
-  }
-
-  .bookDescription {
-    width: 100%;
-    padding: 2rem;
-    height: 500px;
-  }
-
-  .bookDescription h3 {
-    font-size: 1.6rem;
-    text-align: center;
-  }
-
-  .bookContent {
-    flex-direction: row;
-    gap: 1rem;
-  }
-
-  .bookContent p {
-    flex: 0 1 35%;
-  }
-
-  .bookContent img {
-    max-width: 250px;
-  }
-
-  .buyButton {
-    padding: 0.9rem 1.5rem;
-    font-size: 1rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.6rem;
-  }
-
-  .reviewCard {
-    padding: 1.25rem;
-  }
-
-  .carouselArrow {
-    width: 38px;
-    height: 38px;
-    font-size: 1.5rem;
-  }
+  .projectDescription { flex: 1; }
+  .bookDescription { height: 480px; }
+  .bookContent { flex-direction: row; }
 }
 
-/* Mobile (480px - 768px) */
 @media (max-width: 768px) {
-  .page {
-    min-height: auto;
-  }
-
-  .main {
-    padding: 5.5rem 1rem 1.5rem;
-    gap: 2rem;
-  }
-
-  .mainBox {
-    gap: 1.5rem;
-    flex-direction: column;
-  }
-
-  .projectDescription {
-    width: 100%;
-    padding: 1.5rem;
-  }
-
-  .projectDescription h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-
-  .projectDescription h5 {
-    font-size: 0.85rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .projectDescription h5:last-of-type {
-    margin-bottom: 1.5rem;
-  }
-
-  .bookDescription {
-    width: 100%;
-    padding: 1.5rem;
-    height: 500px;
-  }
-
-  .bookDescription h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .bookContent {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .bookContent p {
-    flex: 1;
-    font-size: 0.85rem;
-    line-height: 1.6;
-  }
-
-  .bookContent img {
-    max-width: 200px;
-  }
-
-  .buyButton {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.95rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-
-  .reviewCard {
-    padding: 1.2rem;
-  }
-
-  .carouselArrow {
-    width: 36px;
-    height: 36px;
-    font-size: 1.4rem;
-  }
-
-  .discordImageWrap {
-    border-radius: 12px;
-  }
-
-  .lightboxClose {
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    font-size: 1.3rem;
-  }
+  .main { padding: 5.5rem 1rem 2rem; gap: 3.5rem; }
+  .heroTitle { letter-spacing: -2px; }
+  .heroStats { gap: 1.5rem; }
+  .bookDescription { height: 440px; }
+  .bookContent { flex-direction: column; }
+  .bookContent p { flex: none; }
+  .carouselArrow { width: 36px; height: 36px; font-size: 1.2rem; }
+  .lightboxClose { width: 40px; height: 40px; font-size: 1.2rem; }
 }
 
-/* Mobile Small (480px and below) */
 @media (max-width: 480px) {
-  .main {
-    padding: 5rem 0.75rem 1rem;
-    gap: 1.5rem;
-  }
-
-  .mainBox {
-    gap: 1rem;
-  }
-
+  .main { padding: 5rem 0.75rem 1.5rem; gap: 2.5rem; }
+  .heroStats { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .heroStatNum { font-size: 1.3rem; }
   .projectDescription,
-  .bookDescription {
-    padding: 1.25rem;
-    border-radius: 12px;
-    height: auto;
-  }
-
-  .bookDescription {
-    height: 350px;
-  }
-
-  .projectDescription h3,
-  .bookDescription h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .projectDescription h5 {
-    font-size: 0.8rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .bookContent p {
-    font-size: 0.8rem;
-  }
-
-  .bookContent img {
-    max-width: 160px;
-  }
-
-  .buyButton {
-    padding: 0.7rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .reviewCard {
-    width: 240px;
-    padding: 1rem;
-  }
-
-  .reviewStars {
-    font-size: 1rem;
-  }
-
-  .reviewText {
-    font-size: 0.82rem;
-  }
-
-  .carouselArrow {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
-  }
-
-  .carouselDots { margin-top: 1rem; }
-
-  .discordImageWrap {
-    border-radius: 10px;
-  }
-
-  .lightboxClose {
-    top: 0.75rem;
-    right: 0.75rem;
-    width: 36px;
-    height: 36px;
-    font-size: 1.2rem;
-  }
+  .bookDescription { padding: 1.75rem; border-radius: var(--r-lg, 20px); }
+  .bookDescription { height: 380px; }
+  .carouselPage { gap: 0; }
+  .sectionTitle { font-size: 1.4rem; }
+  .lightboxClose { top: 0.75rem; right: 0.75rem; }
 }
-
-/* ═══════════════════════════════════════════
-   MOBILE PERFORMANCE OVERRIDES
-   Disables GPU-heavy effects below 860px.
-   Desktop behaviour is completely unchanged.
-   ═══════════════════════════════════════════ */
-@media (max-width: 860px) {
-  /* Disable expensive backdrop-filter on all glass cards */
-  .projectDescription,
-  .bookDescription,
-  .reviewCard,
-  .lightboxOverlay {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    /* Use slightly more opaque solid bg to compensate for loss of blur */
-    background-color: rgba(10, 22, 44, 0.92) !important;
-  }
-
-  /* Remove hover transform — mobile has no hover; removing it means the
-     browser doesn't reserve a composite layer for an effect that never fires */
-  .projectDescription:hover,
-  .bookDescription:hover,
-  .reviewCard:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-
-  /* Avoid will-change overhead on carousel track during scroll */
-  .carouselTrack {
-    will-change: auto;
-  }
-
-  /* Hide lightbox backdrop blur (overlay already dark enough) */
-  .lightboxOverlay {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(0, 0, 0, 0.92) !important;
-  }
-}
