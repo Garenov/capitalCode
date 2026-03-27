@@ -83,7 +83,7 @@ export default function Header() {
             onClick={() => router.push("/")}
             aria-label="Go to homepage"
           >
-            Capital Code
+            The Capital Code
           </button>
 
           {/* ── Desktop inline nav ── */}
@@ -252,7 +252,7 @@ function LoginForm({ onSuccess }) {
       <div className={styles.loginHeader}>
         <div>
           <h2 className={styles.loginTitle}>{isSignUp ? "Create Account" : "Welcome Back"}</h2>
-          <p className={styles.loginSubtitle}>{isSignUp ? "Join Capital Code" : "Sign in to your account"}</p>
+          <p className={styles.loginSubtitle}>{isSignUp ? "Join The Capital Code" : "Sign in to your account"}</p>
         </div>
         <button
           className={styles.closeButton}

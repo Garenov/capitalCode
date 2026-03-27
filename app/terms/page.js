@@ -4,8 +4,8 @@ import Link from "next/link";
 import styles from "../legal.module.css";
 
 export const metadata = {
-  title: "Terms & Conditions – Capital Code",
-  description: "Terms and conditions for using Capital Code products and services.",
+  title: "Terms & Conditions – The Capital Code",
+  description: "Terms and conditions for using The Capital Code products and services.",
 };
 
 export default function TermsPage() {
@@ -20,14 +20,14 @@ export default function TermsPage() {
         <div className={styles.section}>
           <h2>1. General</h2>
           <p>
-            These Terms and Conditions govern your use of the Capital Code website and the purchase of our products. By accessing the site or making a purchase, you agree to be bound by these terms.
+            These Terms and Conditions govern your use of The Capital Code website and the purchase of our products. By accessing the site or making a purchase, you agree to be bound by these terms.
           </p>
         </div>
 
         <div className={styles.section}>
           <h2>2. Products</h2>
           <p>
-            Capital Code offers digital and physical editions of "The Capital Code" book. Product descriptions, prices, and availability are subject to change without notice.
+            The Capital Code offers digital and physical editions of "The Capital Code" book. Product descriptions, prices, and availability are subject to change without notice.
           </p>
         </div>
 
@@ -78,14 +78,14 @@ export default function TermsPage() {
         <div className={styles.section}>
           <h2>8. Intellectual Property</h2>
           <p>
-            All content on this website, including the book, graphics, logos, and text, is the property of Capital Code and is protected by copyright law. Unauthorized reproduction or distribution is prohibited.
+            All content on this website, including the book, graphics, logos, and text, is the property of The Capital Code and is protected by copyright law. Unauthorized reproduction or distribution is prohibited.
           </p>
         </div>
 
         <div className={styles.section}>
           <h2>9. Limitation of Liability</h2>
           <p>
-            Capital Code is not responsible for any financial decisions made based on the content of our products. The book is for educational purposes only and does not constitute financial advice.
+            The Capital Code is not responsible for any financial decisions made based on the content of our products. The book is for educational purposes only and does not constitute financial advice.
           </p>
         </div>
 

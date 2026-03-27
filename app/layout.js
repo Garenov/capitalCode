@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Capital Code - Financial Strategy & Analysis",
+  title: "The Capital Code - Financial Strategy & Analysis",
   description: "Unlock the secrets of financial strategy with The Capital Code. Learn disciplined investing and long-term value creation.",
   keywords: "finance, investing, capital, strategy, trading",
   robots: "index, follow",
-  author: "Capital Code",
+  author: "The Capital Code",
   openGraph: {
-    title: "Capital Code - Financial Strategy & Analysis",
+    title: "The Capital Code - Financial Strategy & Analysis",
     description: "Unlock the secrets of financial strategy",
     type: "website",
   },

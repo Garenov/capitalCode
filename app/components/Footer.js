@@ -10,11 +10,11 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
+      <div className={styles.footerInner}>
         {/* Brand */}
-        <div className={styles.brand}>
-          <span className={styles.logo}>Capital Code</span>
-          <p className={styles.copy}>© {year} Capital Code. {t("footer.rights")}</p>
+        <div className={styles.footerBrand}>
+          <span className={styles.footerBrandName}>The Capital Code</span>
+          <p className={styles.footerCopy}>© {year} The Capital Code. {t("footer.rights")}</p>
         </div>
 
         {/* Contact / Phone — centered, prominent */}
@@ -26,10 +26,10 @@ export default function Footer() {
         </div>
 
         {/* Nav links */}
-        <nav className={styles.links}>
-          <Link href="/privacy">{t("footer.privacy")}</Link>
-          <Link href="/terms">{t("footer.terms")}</Link>
-          <Link href="/gdpr">{t("footer.gdpr")}</Link>
+        <nav className={styles.footerLinks}>
+          <Link href="/privacy" className={styles.footerLink}>{t("footer.privacy")}</Link>
+          <Link href="/terms" className={styles.footerLink}>{t("footer.terms")}</Link>
+          <Link href="/gdpr" className={styles.footerLink}>{t("footer.gdpr")}</Link>
         </nav>
       </div>
     </footer>

@@ -4,8 +4,8 @@ import Link from "next/link";
 import styles from "../legal.module.css";
 
 export const metadata = {
-  title: "GDPR – Capital Code",
-  description: "GDPR and data protection information for Capital Code users.",
+  title: "GDPR – The Capital Code",
+  description: "GDPR and data protection information for The Capital Code users.",
 };
 
 export default function GdprPage() {
@@ -20,7 +20,7 @@ export default function GdprPage() {
         <div className={styles.section}>
           <h2>1. Data Controller</h2>
           <p>
-            Capital Code acts as the data controller for personal data collected through this website. We are committed to processing your data in compliance with the General Data Protection Regulation (GDPR) and applicable Czech data protection laws.
+            The Capital Code acts as the data controller for personal data collected through this website. We are committed to processing your data in compliance with the General Data Protection Regulation (GDPR) and applicable Czech data protection laws.
           </p>
         </div>
 

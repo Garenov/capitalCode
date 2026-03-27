@@ -63,7 +63,7 @@ const app = new Elysia()
     .listen(PORT);
 
 console.log(
-    `🦊 Capital Code API running on http://localhost:${PORT}`
+    `🦊 The Capital Code API running on http://localhost:${PORT}`
 );
 
 export type App = typeof app;
