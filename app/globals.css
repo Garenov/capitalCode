@@ -2,8 +2,6 @@
    CAPITAL CODE — DESIGN SYSTEM 2026
    ═══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 :root {
   /* ── Brand palette ── */
   --gold:          #e8cc3f;
@@ -88,7 +86,8 @@ html, body {
 body {
   color: var(--text-primary);
   background: var(--bg-base);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Use Next.js loaded Geist first, then fall back to system sans */
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.65;

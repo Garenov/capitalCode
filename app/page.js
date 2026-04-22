@@ -26,48 +26,12 @@ const discordScreenshots = [
   { src: "/images/discordScreen.png", alt: "Discord chat — live alerts" },
 ];
 
-/* ─── generic hook: items-per-page carousel with touch swipe ─── */
-function useCarousel(total, perPage) {
-  const [index, setIndex] = React.useState(0);
-  const touchStartX = React.useRef(null);
-  const pageCount = Math.ceil(total / perPage);
-
-  const prev = () => setIndex(i => (i - 1 + pageCount) % pageCount);
-  const next = () => setIndex(i => (i + 1) % pageCount);
-
-  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (dx < -40) next();
-    if (dx > 40) prev();
-    touchStartX.current = null;
-  };
-
-  return { index, setIndex, prev, next, pageCount, onTouchStart, onTouchEnd };
-}
-
 const renderStars = (count) => "★".repeat(count) + "☆".repeat(5 - count);
 
 export default function Home() {
   const router = useRouter();
   const [reviews, setReviews] = React.useState(fallbackReviews);
   const [lightboxSrc, setLightboxSrc] = React.useState(null);
-
-  // Responsive reviews per page
-  const [reviewsPerPage, setReviewsPerPage] = React.useState(3);
-  React.useEffect(() => {
-    let timer;
-    const update = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        setReviewsPerPage(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
-      }, 150);
-    };
-    update();
-    window.addEventListener("resize", update, { passive: true });
-    return () => { window.removeEventListener("resize", update); clearTimeout(timer); };
-  }, []);
 
   // Lazy-load PDF iframe
   const pdfRef = React.useRef(null);
@@ -81,9 +45,6 @@ export default function Home() {
     obs.observe(pdfRef.current);
     return () => obs.disconnect();
   }, []);
-
-  const reviewCarousel = useCarousel(reviews.length, reviewsPerPage);
-  const discordCarousel = useCarousel(discordScreenshots.length, 1);
 
   // Fetch reviews from API
   React.useEffect(() => {
@@ -186,123 +147,70 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ─── Reviews Carousel ─── */}
-        <section className={`${styles.reviewsSection} cv-auto`}>
-          <h3 className={styles.sectionTitle}>What Readers Say</h3>
-
-          <div
-            className={styles.carouselWrapper}
-            onTouchStart={reviewCarousel.onTouchStart}
-            onTouchEnd={reviewCarousel.onTouchEnd}
-          >
-            <button
-              className={`${styles.carouselArrow} ${styles.carouselArrowLeft}`}
-              onClick={reviewCarousel.prev}
-              aria-label="Previous reviews"
-            >‹</button>
-
-            <div className={styles.carouselViewport}>
-              <div
-                className={styles.carouselTrack}
-                style={{ transform: `translateX(-${reviewCarousel.index * 100}%)` }}
-              >
-                {Array.from({ length: reviewCarousel.pageCount }).map((_, pageIdx) => (
-                  <div className={styles.carouselPage} key={pageIdx}>
-                    {reviews
-                      .slice(pageIdx * reviewsPerPage, pageIdx * reviewsPerPage + reviewsPerPage)
-                      .map((r, i) => (
-                        <div className={styles.reviewCard} key={i}>
-                          <span className={styles.reviewStars}>{renderStars(r.stars)}</span>
-                          <p className={styles.reviewText}>&ldquo;{r.text}&rdquo;</p>
-                          <span className={styles.reviewAuthor}>— {r.author}</span>
-                        </div>
-                      ))}
-                  </div>
-                ))}
-              </div>
+        {/* ─── VIDEO AD SLOT ─── */}
+        <section className={styles.videoAdSection}>
+          <h3 className={styles.sectionTitle}>Watch the Trailer</h3>
+          <div className={styles.videoAdSlot}>
+            {/*
+              📹 DROP YOUR VIDEO AD HERE
+              Replace the placeholder below with ONE of:
+              • <video src="/ads/promo.mp4" autoPlay muted loop playsInline className={styles.videoAdMedia} />
+              • <iframe src="https://www.youtube.com/embed/VIDEO_ID" allow="autoplay; encrypted-media" allowFullScreen className={styles.videoAdMedia} />
+              Then delete the videoAdPlaceholder div.
+            */}
+            <div className={styles.videoAdPlaceholder}>
+              <span className={styles.videoAdIcon}>▶</span>
+              <span className={styles.videoAdLabel}>Coming Soon</span>
+              <span className={styles.videoAdSub}>Promotional video will appear here</span>
             </div>
-
-            <button
-              className={`${styles.carouselArrow} ${styles.carouselArrowRight}`}
-              onClick={reviewCarousel.next}
-              aria-label="Next reviews"
-            >›</button>
-          </div>
-
-          <div className={styles.carouselDots}>
-            {Array.from({ length: reviewCarousel.pageCount }).map((_, i) => (
-              <button
-                key={i}
-                className={`${styles.dot} ${i === reviewCarousel.index ? styles.dotActive : ""}`}
-                onClick={() => reviewCarousel.setIndex(i)}
-                aria-label={`Go to page ${i + 1}`}
-              />
-            ))}
           </div>
         </section>
 
-        {/* ─── Discord Screenshots Carousel ─── */}
-        <section className={`${styles.discordSection} cv-auto`}>
-          <h3 className={styles.sectionTitle}>From Our Discord Community</h3>
+        {/* ─── SOCIAL PROOF: Screenshots (left) + Reviews 2×2 (right) ─── */}
+        <section className={styles.socialProofSection}>
 
-          <div
-            className={styles.carouselWrapper}
-            onTouchStart={discordCarousel.onTouchStart}
-            onTouchEnd={discordCarousel.onTouchEnd}
-          >
-            <button
-              className={`${styles.carouselArrow} ${styles.carouselArrowLeft}`}
-              onClick={discordCarousel.prev}
-              aria-label="Previous screenshot"
-            >‹</button>
-
-            <div className={styles.carouselViewport}>
-              <div
-                className={styles.carouselTrack}
-                style={{ transform: `translateX(-${discordCarousel.index * 100}%)` }}
-              >
-                {discordScreenshots.map((shot, i) => (
-                  <div className={styles.carouselPage} key={i}>
-                    <div
-                      className={styles.discordImageWrap}
-                      onClick={() => setLightboxSrc(shot.src)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => { if (e.key === "Enter") setLightboxSrc(shot.src); }}
-                      title="Click to enlarge"
-                    >
-                      <Image
-                        src={shot.src}
-                        alt={shot.alt}
-                        width={900}
-                        height={520}
-                        className={styles.discordImage}
-                        priority={i === 0}
-                      />
-                      <span className={styles.discordZoom}>🔍 Click to enlarge</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          {/* LEFT — Discord Screenshots */}
+          <div className={styles.socialProofLeft}>
+            <h3 className={`${styles.sectionTitle} ${styles.discordTitle}`}>From Our Discord</h3>
+            <div className={styles.screenshotStack}>
+              {discordScreenshots.map((shot, i) => (
+                <div
+                  className={styles.discordCard}
+                  key={`ds-${i}`}
+                  onClick={() => setLightboxSrc(shot.src)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === "Enter") setLightboxSrc(shot.src); }}
+                  title="Click to enlarge"
+                >
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={560}
+                    height={320}
+                    className={styles.discordImage}
+                    priority={i === 0}
+                  />
+                  <span className={styles.discordZoom}>🔍 Enlarge</span>
+                </div>
+              ))}
             </div>
-
-            <button
-              className={`${styles.carouselArrow} ${styles.carouselArrowRight}`}
-              onClick={discordCarousel.next}
-              aria-label="Next screenshot"
-            >›</button>
           </div>
 
-          <div className={styles.carouselDots}>
-            {discordScreenshots.map((_, i) => (
-              <button
-                key={i}
-                className={`${styles.dot} ${i === discordCarousel.index ? styles.dotActive : ""}`}
-                onClick={() => discordCarousel.setIndex(i)}
-                aria-label={`Go to screenshot ${i + 1}`}
-              />
-            ))}
+          {/* RIGHT — Reviews 2×2 grid */}
+          <div className={styles.socialProofRight}>
+            <h3 className={styles.sectionTitle}>What Readers Say</h3>
+            <div className={styles.reviewGrid}>
+              {reviews.slice(0, 4).map((r, i) => (
+                <div className={styles.reviewCard} key={`review-${i}`}>
+                  <span className={styles.reviewStars}>{renderStars(r.stars)}</span>
+                  <p className={styles.reviewText}>&ldquo;{r.text}&rdquo;</p>
+                  <span className={styles.reviewAuthor}>— {r.author}</span>
+                </div>
+              ))}
+            </div>
           </div>
+
         </section>
 
         {/* ─── Lightbox ─── */}
