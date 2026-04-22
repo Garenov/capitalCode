@@ -132,7 +132,7 @@ export default function Home() {
                   {pdfVisible ? (
                     <iframe
                       src="/ccBook.pdf#toolbar=0&navpanes=0&view=FitH"
-                      title="Capital Code Book PDF"
+                      title="The Capital Code Book PDF"
                       className={styles.pdfViewer}
                       loading="lazy"
                     />
