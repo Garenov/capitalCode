@@ -518,10 +518,10 @@
   -webkit-text-fill-color: transparent !important;
 }
 
-/* Screenshots stacked vertically */
+/* Screenshots 2×2 grid */
 .screenshotStack {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 }
 
@@ -532,63 +532,7 @@
   gap: 1.25rem;
 }
 
-/* ── REVIEWS SECTION (kept for compat) ── */
-.reviewsSection {
-  width: 100%;
-  max-width: 1400px;
-}
 
-/* ── CAROUSEL ── */
-.carouselWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.carouselViewport {
-  overflow: hidden;
-  border-radius: var(--r-lg, 20px);
-  flex: 1;
-}
-
-.carouselTrack {
-  display: flex;
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.carouselPage {
-  min-width: 100%;
-  display: flex;
-  gap: 1.25rem;
-  padding: 0.25rem;
-}
-
-.carouselArrow {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  backdrop-filter: blur(12px);
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-.carouselArrow:hover {
-  background: rgba(232,204,63,0.12);
-  border-color: rgba(232,204,63,0.3);
-  box-shadow: 0 0 20px rgba(232,204,63,0.2);
-}
-
-/* ── Review card (in 2×2 grid) ── */
 .reviewCard {
   padding: 1.5rem;
   background: rgba(8, 16, 36, 0.7);
@@ -658,32 +602,8 @@
     0 0 80px rgba(114,137,218,0.15);
 }
 
-/* Carousel dots */
-.carouselDots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
-}
 
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.dotActive {
-  background: var(--gold, #e8cc3f);
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(232,204,63,0.5);
-}
-
-/* ══ DISCORD IMAGE IN STRIP ════════════════ */
+/* ══ DISCORD IMAGE ════════════════════════ */
 .discordImage {
   width: 100%;
   height: 100%;
@@ -786,8 +706,7 @@
   .projectDescription { flex: 1; }
   .bookDescription { height: 480px; }
   .bookContent { flex-direction: row; }
-  /* Social proof strip scrolls horizontally on all sizes */
-  .socialProofStrip { gap: 1rem; }
+  .socialProofSection { gap: 2rem; }
 }
 
 @media (max-width: 768px) {
@@ -797,10 +716,11 @@
   .bookDescription { height: 440px; }
   .bookContent { flex-direction: column; }
   .bookContent p { flex: none; }
-  .carouselArrow { width: 36px; height: 36px; font-size: 1.2rem; }
   .lightboxClose { width: 40px; height: 40px; font-size: 1.2rem; }
-  .reviewCard { flex: 0 0 260px; }
-  .discordCard { flex: 0 0 300px; }
+  /* Stack social proof columns on mobile */
+  .socialProofSection { grid-template-columns: 1fr; }
+  .reviewGrid { grid-template-columns: 1fr 1fr; }
+  .screenshotStack { grid-template-columns: 1fr 1fr; }
   /* Video ad: let it be shorter on mobile */
   .videoAdSlot { aspect-ratio: 16 / 7; }
 }
@@ -812,7 +732,8 @@
   .projectDescription,
   .bookDescription { padding: 1.75rem; border-radius: var(--r-lg, 20px); }
   .bookDescription { height: 380px; }
-  .carouselPage { gap: 0; }
   .sectionTitle { font-size: 1.4rem; }
   .lightboxClose { top: 0.75rem; right: 0.75rem; }
+  .reviewGrid { grid-template-columns: 1fr; }
+  .screenshotStack { grid-template-columns: 1fr; }
 }
