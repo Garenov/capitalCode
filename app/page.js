@@ -119,7 +119,7 @@ export default function Home() {
             <h5>Through experience in financial consulting and startup management, I've learned that clarity and structure outweigh vanity. That's what The Capital Code stands for — disciplined thinking and long-term value creation.</h5>
 
             <button className={styles.buyButton} onClick={() => router.push("/pricing")}>
-              <span className={styles.buyButtonText}>Buy Now — From 299 Kč</span>
+              <span className={styles.buyButtonText}>Buy Now</span>
             </button>
           </div>
 
