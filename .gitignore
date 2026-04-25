@@ -32,9 +32,12 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files — ignore secrets, but keep the example template
+.env
+.env.local
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
 # DO NOT ignore .env.example — it's the template for Render dashboard setup
 # !.env.example — already not ignored since no wildcard covers it
 

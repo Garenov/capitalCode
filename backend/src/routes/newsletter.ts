@@ -2,32 +2,16 @@ import { Elysia, t } from "elysia";
 import { db, schema } from "../db";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
+import { sendEmail, sendNewsletterConfirmation, sendNewsletterWelcome, getAppUrl } from "../lib/email";
 
 const CONSENT_TEXT =
     "I agree to receive weekly financial education newsletters from The Capital Code. I can unsubscribe at any time.";
-
-const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 
 function makeToken(seed: string): string {
     return crypto
         .createHmac("sha256", process.env.JWT_SECRET ?? "secret")
         .update(seed + Date.now())
         .digest("hex");
-}
-
-/** Very basic email sender — swap for Resend/SendGrid in production */
-async function sendEmail(to: string, subject: string, html: string) {
-    const apiKey = process.env.RESEND_API_KEY;
-    const from = process.env.EMAIL_FROM ?? "noreply@capitalcode.cz";
-    if (!apiKey || apiKey.startsWith("re_your")) {
-        console.log(`[EMAIL MOCK] To: ${to} | Subject: ${subject}`);
-        return;
-    }
-    await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from, to, subject, html }),
-    });
 }
 
 export const newsletterRoutes = new Elysia({ prefix: "/newsletter" })
@@ -70,15 +54,10 @@ export const newsletterRoutes = new Elysia({ prefix: "/newsletter" })
                 });
             }
 
+            const APP_URL = getAppUrl();
             const confirmUrl = `${APP_URL}/api/newsletter/confirm?token=${confirmToken}`;
-            await sendEmail(
-                email,
-                "Confirm your subscription — The Capital Code",
-                `<p>Hi ${name ?? "there"},</p>
-         <p>Please confirm your subscription by clicking the link below:</p>
-         <p><a href="${confirmUrl}">Confirm Subscription</a></p>
-         <p style="color:#888;font-size:12px">If you didn't sign up, ignore this email.</p>`
-            );
+
+            await sendNewsletterConfirmation(email, name ?? null, confirmUrl);
 
             return { success: true, message: "Check your inbox to confirm your subscription." };
         },
@@ -107,16 +86,10 @@ export const newsletterRoutes = new Elysia({ prefix: "/newsletter" })
             .set({ status: "confirmed", confirmedAt: new Date(), confirmToken: null })
             .where(eq(schema.newsletterSubscribers.id, sub.id));
 
-        await sendEmail(
-            sub.email,
-            "Welcome to The Capital Code Newsletter",
-            `<p>Hi ${sub.name ?? "there"},</p>
-       <p>You're confirmed! Every week you'll receive carefully curated financial education content.</p>
-       <p style="color:#888;font-size:12px">
-         ⚠️ All content is for educational purposes only. Not financial advice.
-         <a href="${APP_URL}/api/newsletter/unsubscribe?token=${sub.unsubToken}">Unsubscribe</a>
-       </p>`
-        );
+        const APP_URL = getAppUrl();
+        const unsubUrl = `${APP_URL}/api/newsletter/unsubscribe?token=${sub.unsubToken}`;
+
+        await sendNewsletterWelcome(sub.email, sub.name, unsubUrl);
 
         return { success: true, message: "Subscription confirmed!" };
     }, { query: t.Object({ token: t.Optional(t.String()) }) })
