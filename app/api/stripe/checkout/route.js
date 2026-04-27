@@ -56,8 +56,7 @@ export async function POST(request) {
         const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
         const stripe = getStripe();
 
-        const session = await stripe.checkout.sessions.create({
-            mode: "payment",
+        const sessionConfig = {
             payment_method_types: ["card"],
             customer_email: user.email,
             line_items: [
@@ -69,11 +68,25 @@ export async function POST(request) {
             metadata: {
                 userId: String(user.id),
                 planName: plan.name,
-                priceKc: String(plan.priceKc),
+                priceUsd: String(plan.priceUsd),
             },
             success_url: `${APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${APP_URL}/checkout/cancel`,
-        });
+        };
+
+        // Use subscription mode for recurring plans, payment mode for one-time
+        if (plan.recurring) {
+            sessionConfig.mode = "subscription";
+            if (plan.trialDays) {
+                sessionConfig.subscription_data = {
+                    trial_period_days: plan.trialDays,
+                };
+            }
+        } else {
+            sessionConfig.mode = "payment";
+        }
+
+        const session = await stripe.checkout.sessions.create(sessionConfig);
 
         return Response.json({ success: true, url: session.url }, { status: 200 });
     } catch (error) {

@@ -31,7 +31,7 @@ export async function POST(request) {
     if (event.type === "checkout.session.completed") {
         const session = event.data.object;
 
-        const { userId, planName, priceKc } = session.metadata ?? {};
+        const { userId, planName, priceUsd } = session.metadata ?? {};
 
         if (!userId || !planName) {
             console.error("Missing metadata in Stripe session", session.id);
@@ -60,8 +60,8 @@ export async function POST(request) {
             .values({
                 userId: parseInt(userId, 10),
                 planName: plan.name,
-                price: plan.priceKc,
-                currency: "Kč",
+                price: plan.priceUsd,
+                currency: "USD",
                 devices: 1,
                 years: 1,
                 status: "completed",
@@ -81,8 +81,8 @@ export async function POST(request) {
             sendPurchaseConfirmation({
                 to: users[0].email,
                 name: users[0].name,
-                planName: plan.name,
-                priceKc: plan.priceKc,
+                planName: plan.label,
+                priceUsd: plan.priceUsd,
                 downloadable: plan.downloadable,
             }).catch((err) => console.error("Purchase email error:", err));
         }

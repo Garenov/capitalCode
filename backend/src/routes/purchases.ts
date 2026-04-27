@@ -47,7 +47,7 @@ export const purchasesRoutes = new Elysia({ prefix: "/purchases" })
                     price,
                     devices: devices ?? 1,
                     years: years ?? 1,
-                    currency: currency ?? "Kč",
+                    currency: currency ?? "USD",
                     transactionId: transactionId ?? null,
                     status: "completed",
                 })

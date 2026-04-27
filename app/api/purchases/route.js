@@ -131,10 +131,10 @@ export async function POST(request) {
       .values({
         userId: decoded.userId,
         planName: plan.name,
-        price: plan.priceKc,
+        price: plan.priceUsd,
         devices: 1,
         years: 1,
-        currency: "Kč",
+        currency: "USD",
         transactionId: transactionId || null,
         status: "pending",  // Only webhook should set "completed"
       })

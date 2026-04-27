@@ -34,7 +34,7 @@ export default function TermsPage() {
         <div className={styles.section}>
           <h2>3. Pricing & Payment</h2>
           <ul>
-            <li>All prices are displayed in Czech Koruna (Kč) and include applicable taxes</li>
+            <li>All prices are displayed in US Dollars (USD) and include applicable taxes</li>
             <li>Payment is processed securely via Stripe</li>
             <li>Access to digital content is granted only after successful payment confirmation</li>
             <li>Prices are validated server-side and cannot be modified by the client</li>

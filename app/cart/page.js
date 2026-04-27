@@ -161,9 +161,9 @@ export default function Cart() {
                                             </div>
 
                                             <div className={styles.itemPrice}>
-                                                <span className={styles.price}>{item.price * item.quantity} Kč</span>
+                                                <span className={styles.price}>${item.price * item.quantity}</span>
                                                 {item.quantity > 1 && (
-                                                    <span className={styles.pricePerUnit}>{item.price} Kč/ea</span>
+                                                    <span className={styles.pricePerUnit}>${item.price}/ea</span>
                                                 )}
                                             </div>
 
@@ -182,7 +182,7 @@ export default function Cart() {
                             <div className={styles.summary}>
                                 <div className={styles.summaryRow}>
                                     <span>Subtotal:</span>
-                                    <span>{getTotalPrice()} Kč</span>
+                                    <span>${getTotalPrice()}</span>
                                 </div>
                                 <div className={styles.summaryRow}>
                                     <span>Shipping:</span>
@@ -190,7 +190,7 @@ export default function Cart() {
                                 </div>
                                 <div className={`${styles.summaryRow} ${styles.total}`}>
                                     <span>Total:</span>
-                                    <span className={styles.totalPrice}>{getTotalPrice()} Kč</span>
+                                    <span className={styles.totalPrice}>${getTotalPrice()}</span>
                                 </div>
 
                                 <button

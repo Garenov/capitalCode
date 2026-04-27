@@ -25,9 +25,9 @@ export const purchases = sqliteTable("purchases", {
     userId: integer("user_id")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
-    planName: text("plan_name", { enum: ["DIGITAL", "PHYSICAL", "BUNDLE"] }).notNull(),
+    planName: text("plan_name", { enum: ["BOOK", "PREMIUM", "DISCORD", "DIGITAL", "PHYSICAL", "BUNDLE"] }).notNull(),
     price: integer("price").notNull(),
-    currency: text("currency").notNull().default("Kč"),
+    currency: text("currency").notNull().default("USD"),
     devices: integer("devices").notNull().default(1),
     years: integer("years").notNull().default(1),
     status: text("status", { enum: ["pending", "completed", "cancelled"] })

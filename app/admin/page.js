@@ -166,8 +166,8 @@ export default function AdminDashboard() {
               <div className={styles.statsGrid}>
                 <div className={styles.statCard}><h3>Total Users</h3><p className={styles.statValue}>{data?.stats.totalUsers}</p></div>
                 <div className={styles.statCard}><h3>Total Purchases</h3><p className={styles.statValue}>{data?.stats.totalPurchases}</p></div>
-                <div className={styles.statCard}><h3>Total Revenue</h3><p className={styles.statValue}>{data?.stats.totalRevenue.toLocaleString()} Kč</p></div>
-                <div className={styles.statCard}><h3>Completed Revenue</h3><p className={styles.statValue}>{enhancedStats?.completedRevenue.toLocaleString()} Kč</p></div>
+                <div className={styles.statCard}><h3>Total Revenue</h3><p className={styles.statValue}>${data?.stats.totalRevenue.toLocaleString()}</p></div>
+                <div className={styles.statCard}><h3>Completed Revenue</h3><p className={styles.statValue}>${enhancedStats?.completedRevenue.toLocaleString()}</p></div>
               </div>
               <div className={styles.statsRow}>
                 <div className={styles.purchaseBreakdown}>
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                   <h2>Revenue by Status</h2>
                   <div className={styles.planStats}>
                     {Object.entries(enhancedStats?.revenueByStatus || {}).map(([status, revenue]) => (
-                      <div key={status} className={styles.planStat}><span className={styles[status]}>{status}</span><span className={styles.count}>{revenue.toLocaleString()} Kč</span></div>
+                      <div key={status} className={styles.planStat}><span className={styles[status]}>{status}</span><span className={styles.count}>${revenue.toLocaleString()}</span></div>
                     ))}
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                     {enhancedStats?.recentPurchases.map((purchase) => (
                       <div key={purchase.id} className={styles.activityItem}>
                         <div><strong>{purchase.planName}</strong><br /><small>{purchase.user?.name || "Unknown"}</small></div>
-                        <div className={styles.activityRight}><strong>{purchase.price} Kč</strong><br /><span className={`${styles.statusSmall} ${styles[purchase.status]}`}>{purchase.status}</span></div>
+                        <div className={styles.activityRight}><strong>${purchase.price}</strong><br /><span className={`${styles.statusSmall} ${styles[purchase.status]}`}>{purchase.status}</span></div>
                       </div>
                     ))}
                   </div>
@@ -257,6 +257,9 @@ export default function AdminDashboard() {
                 </select>
                 <select value={planFilter} onChange={(e) => setPlanFilter(e.target.value)} className={styles.filterSelect}>
                   <option value="all">All Plans</option>
+                  <option value="BOOK">Book</option>
+                  <option value="PREMIUM">Premium</option>
+                  <option value="DISCORD">Discord</option>
                   <option value="DIGITAL">Digital</option>
                   <option value="PHYSICAL">Physical</option>
                   <option value="BUNDLE">Bundle</option>
