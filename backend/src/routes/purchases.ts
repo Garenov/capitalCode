@@ -58,7 +58,7 @@ export const purchasesRoutes = new Elysia({ prefix: "/purchases" })
         },
         {
             body: t.Object({
-                planName: t.Union([t.Literal("DIGITAL"), t.Literal("PHYSICAL"), t.Literal("BUNDLE")]),
+                planName: t.Union([t.Literal("BOOK"), t.Literal("PREMIUM"), t.Literal("DISCORD"), t.Literal("DIGITAL"), t.Literal("PHYSICAL"), t.Literal("BUNDLE")]),
                 price: t.Number(),
                 devices: t.Optional(t.Number()),
                 years: t.Optional(t.Number()),

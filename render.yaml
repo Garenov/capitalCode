@@ -54,6 +54,12 @@ services:
         sync: false
 
       # ─── Stripe Price IDs ─────────────────────────────────────
+      - key: STRIPE_PRICE_BOOK
+        sync: false
+      - key: STRIPE_PRICE_PREMIUM
+        sync: false
+      - key: STRIPE_PRICE_DISCORD
+        sync: false
       - key: STRIPE_PRICE_DIGITAL
         sync: false
       - key: STRIPE_PRICE_PHYSICAL

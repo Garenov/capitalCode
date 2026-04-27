@@ -147,7 +147,7 @@ export default function UserPage() {
                                                 <span className={styles.value}>{purchase.devices}</span>
                                             </div>
                                         </div>
-                                        {(purchase.planName === 'DIGITAL' || purchase.planName === 'BUNDLE') &&
+                                        {['DIGITAL', 'BUNDLE', 'BOOK', 'PREMIUM'].includes(purchase.planName) &&
                                             purchase.status === 'completed' && (
                                                 <button
                                                     onClick={downloadPDF}
