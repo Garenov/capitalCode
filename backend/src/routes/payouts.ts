@@ -133,7 +133,7 @@ export const payoutsRoutes = new Elysia({ prefix: "/payouts" })
             const [payout] = await db.insert(schema.payoutRequests).values({
                 userId: user.userId,
                 amount,
-                currency: "CZK",
+                currency: "USD",
                 bankIban: encryptIBAN(cleanIban),
                 status: fraudScore > 30 ? "under_review" : "pending",
                 idempotencyKey,
