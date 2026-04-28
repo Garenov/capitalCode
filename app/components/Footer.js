@@ -19,7 +19,7 @@ export default function Footer() {
 
         {/* Contact / Phone — centered, prominent */}
         <div className={styles.contact}>
-          <span className={styles.contactLabel}>Support</span>
+          <span className={styles.contactLabel}>Tech Support</span>
           <a href="tel:+420732298550" className={styles.phone}>
             📞 +420 732 298 550
           </a>
