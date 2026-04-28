@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════
+   VERIFY PAGE — 2026 DESIGN
+   ═══════════════════════════════════════════ */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(232,204,63,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 110%, rgba(0,212,255,0.1) 0%, transparent 50%),
+    #030812;
+  padding: 1rem;
+}
+
+.verifyCard {
+  background: rgba(8, 16, 36, 0.7);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 28px;
+  padding: 3rem 2.5rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.5);
+  animation: _fadeUp 0.4s ease both;
+}
+
+/* Chromatic top-edge shimmer */
+.verifyCard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,204,63,0.5), rgba(0,212,255,0.2), transparent);
+}
+
+@keyframes _fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.25rem;
+  line-height: 1;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.5px;
+  color: #eef2ff;
+}
+
+.titleSuccess {
+  background: linear-gradient(135deg, #fff 25%, #4ade80 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.titleError {
+  background: linear-gradient(135deg, #fff 25%, #f87171 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.titleLoading {
+  background: linear-gradient(135deg, #fff 25%, #f5de6a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.message {
+  color: #8fa8c8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.redirectMsg {
+  color: #4a5e7a;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 0.85rem 2.25rem;
+  background: linear-gradient(135deg, #e8cc3f 0%, #f5de6a 100%);
+  color: #06111e;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  transition: transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 0 24px rgba(232, 204, 63, 0.25);
+  margin-top: 0.5rem;
+}
+
+.homeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(232, 204, 63, 0.45);
+}

@@ -13,7 +13,8 @@ export default function TermsPage() {
     <div className={styles.page}>
       <Header />
       <main className={styles.mainContent}>
-        <Link href="/" className={styles.backLink}>← Back to Home</Link>
+        <div className={styles.legalContainer}>
+          <Link href="/" className={styles.backLink}>← Back to Home</Link>
         <h1 className={styles.title}>Terms & Conditions</h1>
         <p className={styles.updated}>Last updated: March 10, 2026</p>
 
@@ -94,6 +95,7 @@ export default function TermsPage() {
           <p>
             For any questions about these terms, please contact us via the <Link href="/qna">Q&A page</Link>.
           </p>
+          </div>
         </div>
       </main>
       <Footer />

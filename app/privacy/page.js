@@ -13,7 +13,8 @@ export default function PrivacyPage() {
     <div className={styles.page}>
       <Header />
       <main className={styles.mainContent}>
-        <Link href="/" className={styles.backLink}>← Back to Home</Link>
+        <div className={styles.legalContainer}>
+          <Link href="/" className={styles.backLink}>← Back to Home</Link>
         <h1 className={styles.title}>Privacy Policy</h1>
         <p className={styles.updated}>Last updated: March 10, 2026</p>
 
@@ -105,6 +106,7 @@ export default function PrivacyPage() {
           <p>
             If you have any questions about this Privacy Policy, please contact us via the <Link href="/qna">Q&A page</Link>.
           </p>
+          </div>
         </div>
       </main>
       <Footer />

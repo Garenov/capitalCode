@@ -13,7 +13,8 @@ export default function GdprPage() {
     <div className={styles.page}>
       <Header />
       <main className={styles.mainContent}>
-        <Link href="/" className={styles.backLink}>← Back to Home</Link>
+        <div className={styles.legalContainer}>
+          <Link href="/" className={styles.backLink}>← Back to Home</Link>
         <h1 className={styles.title}>GDPR & Data Protection</h1>
         <p className={styles.updated}>Last updated: March 10, 2026</p>
 
@@ -84,6 +85,7 @@ export default function GdprPage() {
           <p>
             To exercise any of your GDPR rights, please contact us through the <Link href="/qna">Q&A page</Link>. We will respond to your request within 30 days.
           </p>
+          </div>
         </div>
       </main>
       <Footer />
