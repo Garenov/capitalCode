@@ -101,10 +101,9 @@ export default function Header() {
 
           {/* ── Right actions ── */}
           <div className={styles.actions}>
-            {/* Tech Support button — highlighted */}
             <button
               className={styles.supportBtn}
-              onClick={() => router.push("/qna")}
+              onClick={() => router.push("/support")}
               aria-label="Get tech support"
               title="Technical Support"
             >
@@ -175,7 +174,7 @@ export default function Header() {
           ))}
           <button
             className={styles.mobileSupportLink}
-            onClick={() => { router.push("/qna"); setMobileMenuOpen(false); }}
+            onClick={() => { router.push("/support"); setMobileMenuOpen(false); }}
           >
             🛠️ Tech Support
           </button>
