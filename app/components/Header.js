@@ -102,7 +102,7 @@ export default function Header() {
           {/* ── Right actions ── */}
           <div className={styles.actions}>
             <button
-              className={styles.supportBtn}
+              className={`${styles.supportBtn} ${pathname === "/support" ? styles.supportBtnActive : ""}`}
               onClick={() => router.push("/support")}
               aria-label="Get tech support"
               title="Technical Support"
@@ -113,7 +113,7 @@ export default function Header() {
 
             {/* Cart */}
             <button
-              className={styles.iconBtn}
+              className={`${styles.iconBtn} ${pathname === "/cart" ? styles.iconBtnActive : ""}`}
               onClick={() => router.push("/cart")}
               aria-label="Shopping Cart"
               title="View Cart"
